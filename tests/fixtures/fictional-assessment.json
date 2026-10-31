@@ -1,0 +1,249 @@
+{
+  "member": {
+    "name": "Example Fictional Registry",
+    "website": "https://registry.example.org"
+  },
+  "resource_functions": [
+    {
+      "tag": "indexing",
+      "basis": "inferred",
+      "uncertainty": "Fictional; no real resource was inspected."
+    },
+    {
+      "tag": "submissions",
+      "basis": "supplied"
+    }
+  ],
+  "audit_date": "2026-01-01",
+  "access_limitations": [
+    "FICTIONAL FIXTURE: no real member or website was audited."
+  ],
+  "baseline": {
+    "id": "scicodes-baseline-unresolved",
+    "version": "unresolved",
+    "status": "unresolved"
+  },
+  "skill_version": "0.1.0",
+  "rubric_version": "0.1.0-draft",
+  "model": "unknown",
+  "review": {
+    "audience": "member_review_draft",
+    "status": "draft",
+    "public_export_sanitized": false
+  },
+  "evidence": [
+    {
+      "id": "E1",
+      "source_location": "https://registry.example.org/about",
+      "accessed": "2026-01-01",
+      "provenance": "public_statement",
+      "visibility": "public",
+      "excerpt": "Fictional page describing the registry."
+    },
+    {
+      "id": "E2",
+      "source_location": "Restricted: fictional maintainer email, 2025-12-15",
+      "accessed": "2026-01-01",
+      "provenance": "maintainer_assertion",
+      "visibility": "restricted"
+    }
+  ],
+  "findings": [
+    {
+      "criterion_id": "BP1.1",
+      "outcome": "unknown",
+      "reason": "baseline_unresolved",
+      "note": "Criterion source basis is unresolved in the skeleton rubric; no judgment made.",
+      "evidence_ids": [
+        "E1"
+      ]
+    },
+    {
+      "criterion_id": "BP2.1",
+      "outcome": "unknown",
+      "reason": "baseline_unresolved",
+      "note": "Criterion source basis is unresolved in the skeleton rubric; no judgment made."
+    },
+    {
+      "criterion_id": "BP3.1",
+      "outcome": "unknown",
+      "reason": "baseline_unresolved",
+      "note": "Criterion source basis is unresolved in the skeleton rubric; no judgment made."
+    },
+    {
+      "criterion_id": "BP4.1",
+      "outcome": "unknown",
+      "reason": "baseline_unresolved",
+      "note": "Criterion source basis is unresolved in the skeleton rubric; no judgment made."
+    },
+    {
+      "criterion_id": "BP5.1",
+      "outcome": "unknown",
+      "reason": "baseline_unresolved",
+      "note": "Criterion source basis is unresolved in the skeleton rubric; no judgment made."
+    },
+    {
+      "criterion_id": "BP6.1",
+      "outcome": "unknown",
+      "reason": "baseline_unresolved",
+      "note": "Criterion source basis is unresolved in the skeleton rubric; no judgment made."
+    },
+    {
+      "criterion_id": "BP7.1",
+      "outcome": "unknown",
+      "reason": "baseline_unresolved",
+      "note": "Criterion source basis is unresolved in the skeleton rubric; no judgment made.",
+      "evidence_ids": [
+        "E2"
+      ],
+      "basis_publicly_verifiable": false
+    },
+    {
+      "criterion_id": "BP8.1",
+      "outcome": "unknown",
+      "reason": "baseline_unresolved",
+      "note": "Criterion source basis is unresolved in the skeleton rubric; no judgment made."
+    },
+    {
+      "criterion_id": "BP9.1",
+      "outcome": "unknown",
+      "reason": "baseline_unresolved",
+      "note": "Criterion source basis is unresolved in the skeleton rubric; no judgment made."
+    }
+  ],
+  "practice_results": [
+    {
+      "practice_id": "BP1",
+      "result": "undetermined",
+      "counts": {
+        "met": 0,
+        "unmet": 0,
+        "unknown": 1,
+        "not_applicable": 0
+      },
+      "evidence_complete": false
+    },
+    {
+      "practice_id": "BP2",
+      "result": "undetermined",
+      "counts": {
+        "met": 0,
+        "unmet": 0,
+        "unknown": 1,
+        "not_applicable": 0
+      },
+      "evidence_complete": false
+    },
+    {
+      "practice_id": "BP3",
+      "result": "undetermined",
+      "counts": {
+        "met": 0,
+        "unmet": 0,
+        "unknown": 1,
+        "not_applicable": 0
+      },
+      "evidence_complete": false
+    },
+    {
+      "practice_id": "BP4",
+      "result": "undetermined",
+      "counts": {
+        "met": 0,
+        "unmet": 0,
+        "unknown": 1,
+        "not_applicable": 0
+      },
+      "evidence_complete": false
+    },
+    {
+      "practice_id": "BP5",
+      "result": "undetermined",
+      "counts": {
+        "met": 0,
+        "unmet": 0,
+        "unknown": 1,
+        "not_applicable": 0
+      },
+      "evidence_complete": false
+    },
+    {
+      "practice_id": "BP6",
+      "result": "undetermined",
+      "counts": {
+        "met": 0,
+        "unmet": 0,
+        "unknown": 1,
+        "not_applicable": 0
+      },
+      "evidence_complete": false
+    },
+    {
+      "practice_id": "BP7",
+      "result": "undetermined",
+      "counts": {
+        "met": 0,
+        "unmet": 0,
+        "unknown": 1,
+        "not_applicable": 0
+      },
+      "evidence_complete": false
+    },
+    {
+      "practice_id": "BP8",
+      "result": "undetermined",
+      "counts": {
+        "met": 0,
+        "unmet": 0,
+        "unknown": 1,
+        "not_applicable": 0
+      },
+      "evidence_complete": false
+    },
+    {
+      "practice_id": "BP9",
+      "result": "undetermined",
+      "counts": {
+        "met": 0,
+        "unmet": 0,
+        "unknown": 1,
+        "not_applicable": 0
+      },
+      "evidence_complete": false
+    }
+  ],
+  "actions": [
+    {
+      "id": "A1",
+      "type": "evidence_request",
+      "practice_id": "BP7",
+      "criterion_ids": [
+        "BP7.1"
+      ],
+      "change": "Ask the maintainer to point to any published privacy statement.",
+      "responsible_role": "Registry maintainer",
+      "completion_check": "A public URL or a confirmation that none exists is recorded."
+    },
+    {
+      "id": "A2",
+      "type": "evidence_request",
+      "practice_id": "BP5",
+      "criterion_ids": [
+        "BP5.1"
+      ],
+      "change": "Ask the maintainer where the metadata schema is documented.",
+      "responsible_role": "Registry maintainer",
+      "completion_check": "A public URL or a confirmation that none exists is recorded."
+    }
+  ],
+  "verification": [
+    {
+      "evidence_ids": [
+        "E1"
+      ],
+      "selection": "sample",
+      "checked": "Re-read the fictional page and confirmed the excerpt.",
+      "same_agent": true
+    }
+  ]
+}
