@@ -24,9 +24,17 @@ Assumptions: the agent can browse public web pages (otherwise it assesses only e
 
 The skill is the folder `skills/assess-scicodes-practices/` (a `SKILL.md` with `references/` and `assets/`). According to the GitHub Docs page "Adding agent skills for GitHub Copilot" (<https://docs.github.com/en/copilot/how-tos/use-copilot-agents/coding-agent/create-skills>, read 2026-10-31), Copilot project skills live in `.github/skills`, `.claude/skills`, or `.agents/skills` in a repository, and personal skills in `~/.copilot/skills` or `~/.agents/skills`; each skill is a lowercase-hyphenated subdirectory containing `SKILL.md`. Copy the folder to one of those locations. Per the same page, skills work with Copilot cloud agent, Copilot code review, GitHub Copilot CLI, the GitHub Copilot app, and agent mode in Visual Studio Code.
 
-Canonical references (not yet read; the sites were unreachable from the authoring environment, so nothing here is derived from them): the Agent Skills specification at <https://agentskills.io/home>, its client guidance at <https://agentskills.io/client-implementation/adding-skills-support>, and the skills directory and CLI at <https://www.skills.sh/>. Pending verification against those pages: `npx skills add` / `npx skills update`, and the choice between project-specific and global installation. Prefer project-specific installation: a global skill can bias unrelated tasks toward this assessment's way of organizing information.
+Per the Agent Skills guide "How to add skills support to your agent" (<https://agentskills.io/client-implementation/adding-skills-support>, supplied by a maintainer 2026-10-31; specification at <https://agentskills.io/home>):
 
-Not verified: installation for other agents, and any install commands. They are omitted deliberately. Compatibility above is documented, not tested; this skill has not been run end to end in any environment. The Agent Skills specification site could not be reached, so frontmatter is checked only against the GitHub Docs description (`name`, `description`, optional `license`).
+- Clients discover skills as subdirectories containing a file named exactly `SKILL.md`, typically at project level (`<project>/.agents/skills/` or a client-specific directory) and user level (`~/.agents/skills/` or a client-specific directory). The spec does not mandate locations; `.agents/skills/` is a widely adopted cross-client convention, and some clients also scan `.claude/skills/`.
+- Project-level skills override user-level skills of the same name.
+- Clients may only load project-level skills from folders you have marked as trusted.
+
+**Recommended: project-specific installation.** Copy the folder into the project's `.agents/skills/` (or your client's own project skills directory) so it applies only where you intend to assess a member. Avoid user-level (global) installation: a global skill is visible in every project and can steer unrelated tasks toward this assessment's way of organizing information.
+
+The skills directory and CLI at <https://www.skills.sh/> have not been read, so `npx skills add` / `npx skills update` and their project-versus-global options are not documented here.
+
+Not verified: installation for other agents, and any install commands. They are omitted deliberately. Compatibility above is documented, not tested; this skill has not been run end to end in any environment. The Agent Skills specification itself has not been read, so frontmatter is checked only against the GitHub Docs description (`name`, `description`, optional `license`).
 
 ### Development
 
