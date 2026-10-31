@@ -22,19 +22,23 @@ Assumptions: the agent can browse public web pages (otherwise it assesses only e
 
 ### Installation
 
-The skill is the folder `skills/assess-scicodes-practices/` (a `SKILL.md` with `references/` and `assets/`). According to the GitHub Docs page "Adding agent skills for GitHub Copilot" (<https://docs.github.com/en/copilot/how-tos/use-copilot-agents/coding-agent/create-skills>, read 2026-10-31), Copilot project skills live in `.github/skills`, `.claude/skills`, or `.agents/skills` in a repository, and personal skills in `~/.copilot/skills` or `~/.agents/skills`; each skill is a lowercase-hyphenated subdirectory containing `SKILL.md`. Copy the folder to one of those locations. Per the same page, skills work with Copilot cloud agent, Copilot code review, GitHub Copilot CLI, the GitHub Copilot app, and agent mode in Visual Studio Code.
 
-Per the Agent Skills guide "How to add skills support to your agent" (<https://agentskills.io/client-implementation/adding-skills-support>, supplied by a maintainer 2026-10-31; specification at <https://agentskills.io/home>):
+[OMF Skill installation instructions](https://github.com/openmodelingfoundation/skills/blob/main/docs/install.md).
 
-- Clients discover skills as subdirectories containing a file named exactly `SKILL.md`, typically at project level (`<project>/.agents/skills/` or a client-specific directory) and user level (`~/.agents/skills/` or a client-specific directory). The spec does not mandate locations; `.agents/skills/` is a widely adopted cross-client convention, and some clients also scan `.claude/skills/`.
-- Project-level skills override user-level skills of the same name.
-- Clients may only load project-level skills from folders you have marked as trusted.
 
-**Recommended: project-specific installation.** Copy the folder into the project's `.agents/skills/` (or your client's own project skills directory) so it applies only where you intend to assess a member. Avoid user-level (global) installation: a global skill is visible in every project and can steer unrelated tasks toward this assessment's way of organizing information.
+#### npx
+```bash
+npx skills add SciCodes/skills --list
+npx skills add SciCodes/skills
+```
 
-The skills directory and CLI at <https://www.skills.sh/> have not been read, so `npx skills add` / `npx skills update` and their project-versus-global options are not documented here.
+#### gh cli
+```bash
+gh skill install SciCodes/skills --all
+```
 
-Not verified: installation for other agents, and any install commands. They are omitted deliberately. Compatibility above is documented, not tested; this skill has not been run end to end in any environment. The Agent Skills specification itself has not been read, so frontmatter is checked only against the GitHub Docs description (`name`, `description`, optional `license`).
+**Recommended: project-specific installation.** Copy the folder into a project's `.agents/skills/` and avoid global installation. Global skills are visible in every project and might steer unrelated tasks toward this assessment's way of organizing information. For multiple assessments, create a dedicated shell project that manages a locally versioned skill installation and tracks results and feedback.
+
 
 ### Development
 
@@ -53,8 +57,9 @@ make eval       # optional; needs a model (see scripts/eval.py), may incur cost
 Original contributions are under the Apache License 2.0 (the existing `LICENSE`). The selected paper is CC-BY-4.0. The rubric attributes and paraphrases its recommendations; no paper PDF or member scorecard rows are bundled. Source materials retain their own licenses:
 
 - SciCodes overview: <https://scicodes.net/best-practices-for-software-registries-and-repositories/>
-- Selected published baseline: Garijo et al. (2022), <https://doi.org/10.7717/peerj-cs.1023> (user-supplied PDF read)
-- Earlier concise guide: <https://arxiv.org/abs/2012.13117> (not read)
+- Selected published baseline: Garijo et al. (2022), <https://doi.org/10.7717/peerj-cs.1023>
 - 2023 self-assessment: <https://docs.google.com/spreadsheets/d/1Ud2qsplv_17AjXKox7azES-L7LTqzj5rXaSpEaFAIjw/edit?gid=0#gid=0>
 
-The supplied `peerj-cs-08-1023.pdf` has been read and pinned by publication date, DOI, and SHA-256 in the rubric. Online successors and the overview have not been verified. A user-supplied `2023-9 Best Practices Self Assessment.ods` export has now been read; its provenance and historical comparison limits are recorded in `skills/assess-scicodes-practices/references/assessment-2023-crosswalk.md`. The live spreadsheet has not been verified against the export.
+The supplied `peerj-cs-08-1023.pdf` has been read and pinned by publication date, DOI, and SHA-256 in the rubric. 
+
+A user-supplied `2023-9 Best Practices Self Assessment.ods` export has been read; its provenance and historical comparison limits are recorded in `skills/assess-scicodes-practices/references/assessment-2023-crosswalk.md`.
