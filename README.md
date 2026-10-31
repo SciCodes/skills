@@ -10,9 +10,11 @@ Helps research software registries and repositories assess adoption of published
 
 ### Invocation
 
-A member name and website are enough, for example:
+A registry or repository URL is enough to begin, including a collection URL:
 
-> Use the assess-scicodes-practices skill to assess "Example Registry" (https://registry.example.org) against the SciCodes best practices.
+> Use the assess-scicodes-practices skill to assess <https://registry.example.org/codebases> against the SciCodes best practices.
+
+The agent infers the resource name and scope, then follows relevant service-wide policy and documentation links. It assesses the repository service's practices; individual software records are only sampled evidence when needed. You can also supply a member name or clarify the scope.
 
 Assumptions: the agent can browse public web pages (otherwise it assesses only evidence you supply and says current public evidence was not verified) and can write to a working directory (otherwise it returns the three outputs inline).
 
@@ -31,6 +33,8 @@ make eval       # optional; needs a model (see scripts/eval.py), may incur cost
 ```
 
 `make validate` checks skill frontmatter and reference paths, rubric and schema validity, fixture validation, and the tier boundary tests. The fixture in `tests/fixtures/` is fictional and uses reserved domains.
+
+`make eval` supplies the skill, rubric, method, schema, and fixed fictional evidence to a model wrapper over stdin. It checks JSON output only; it does not test live browsing or report and checklist generation. A completed source-backed rubric and an end-to-end assessment with human review are still needed before claiming that URL-to-assessment behavior is validated.
 
 ## Sources and licensing
 

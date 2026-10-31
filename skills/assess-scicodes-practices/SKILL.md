@@ -10,15 +10,15 @@ Experimental; the rubric is an assessment interpretation pending SciCodes review
 
 ## Inputs
 
-- Required: member name and website. This suffices to begin.
-- Optional: resource functions, authorized evidence, prior assessment, capacity constraints, output directory, pinned baseline.
+- Required: a registry or repository URL, including a collection URL. This suffices to begin.
+- Optional: member name, resource functions, authorized evidence, prior assessment, capacity constraints, output directory, pinned baseline.
 
 If resource functions are not supplied, infer them from evidence (suggested tags: indexing, hosting, submissions, accounts; others allowed) and record uncertainty where it affects applicability.
 
 ## Workflow
 
 1. Load [rubric.yaml](references/rubric.yaml) before making any assessment judgment. Pin the baseline it names; if a requested baseline conflicts, defer dependent judgments and explain the mismatch. If a newer publication exists, give a notice rather than switching silently.
-2. Load [method.md](references/method.md) before collecting evidence. Follow its bounded search, evidence distinctions, and restricted-evidence handling.
+2. Load [method.md](references/method.md) before collecting evidence. Resolve the resource and assessment scope from the supplied URL, then follow its bounded search, evidence distinctions, and restricted-evidence handling.
 3. Record every rubric criterion exactly once, with outcome met, unmet, unknown, or not_applicable. Missing evidence is `unknown`, never failure or success. Derive practice results only with the ordered `decision_rules` in the rubric, and show criterion counts and evidence completeness with each result.
 4. If comparing with 2023 or another prior assessment, load [assessment-2023-crosswalk.md](references/assessment-2023-crosswalk.md). A historical "yes" does not establish a current tier.
 5. Recheck findings as [method.md](references/method.md) requires.

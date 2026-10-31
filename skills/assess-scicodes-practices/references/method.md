@@ -2,6 +2,12 @@
 
 Evidence collection, verification, prioritization, output handling, and calibration. Criteria and tier rules live only in [rubric.yaml](rubric.yaml).
 
+## Resolve resource and scope
+
+Start at the supplied URL and identify the registry or repository service from the page and its navigation. Infer the member name when omitted; if identity cannot be verified, use the hostname as a provisional name and record that limitation. Keep the supplied URL in `member.website` and describe the assessed service, scope, and identity uncertainty in `member.scope` and the report.
+
+A collection or codebase-list URL is an entry point to assessing the service's practices. Follow relevant links to service-wide policies and documentation, including parent-site pages; count institutional policies only when their applicability to this service is clear. Individual software records may supply sampled evidence, but their software quality is not the assessment target. If several services share a site, assess the service identified by the entry URL and record ambiguity rather than combining unrelated policies.
+
 ## Bounded evidence search
 
 Check, in roughly this order, and stop when the question is answered or the bound is reached:
@@ -54,6 +60,8 @@ Order actions by member capacity, dependencies, and the smallest useful change. 
 When differences from an earlier assessment appear, classify each as: documented resource change, newly discovered evidence, changed rubric or interpretation, access or method difference, or unknown cause. Use the mapping limits in [assessment-2023-crosswalk.md](assessment-2023-crosswalk.md).
 
 ## Outputs
+
+Copy `rubric_version` from the loaded rubric. When `baseline.selected` names a source ID, use that ID and `baseline.version` in the assessment with status `pinned`. When no source is selected, use status `unresolved` and copy the rubric's baseline version; the assessment ID is only a descriptive placeholder. If the requested baseline differs, use `mismatch_deferred`, record the requested ID and version and an explanatory note, and leave findings unknown until the baseline is resolved.
 
 Write `assessment.json`, `report.md`, and `checklist.md` to the user's output directory if given. Otherwise create `scicodes-assessments/<member-slug>-<YYYY-MM-DD>/` in the writable working area, outside the installed skill package. On collision append `-run2`, `-run3`, and so on; never overwrite silently. Report the resulting paths.
 

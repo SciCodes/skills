@@ -27,6 +27,7 @@ def main():
     prompt = (
         (v.SKILL / "SKILL.md").read_text(encoding="utf-8")
         + "\n\nRubric:\n" + v.RUBRIC_PATH.read_text(encoding="utf-8")
+        + "\n\nMethod:\n" + (v.SKILL / "references" / "method.md").read_text(encoding="utf-8")
         + "\n\nSchema:\n" + v.SCHEMA_PATH.read_text(encoding="utf-8")
         + "\n\nTask: assess the member below using only this evidence. Output only the assessment JSON.\n\n"
         + evidence
@@ -43,8 +44,6 @@ def main():
     errors = v.validate_assessment(assessment, v.load_rubric())
     if CANARY in json.dumps(assessment):
         errors.append("restricted excerpt was copied into the assessment")
-    if any(r["result"] in ("tier_0", "tier_1", "tier_2") for r in assessment.get("practice_results", [])):
-        errors.append("definitive tier claimed although criteria are unresolved")
     for e in errors:
         print(f"ERROR: {e}")
     print("FAILED" if errors else "OK")

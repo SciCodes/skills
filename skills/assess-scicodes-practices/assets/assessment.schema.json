@@ -11,7 +11,11 @@
       "type": "object",
       "required": ["name", "website"],
       "additionalProperties": false,
-      "properties": {"name": {"type": "string", "minLength": 1}, "website": {"type": "string", "minLength": 1}}
+      "properties": {
+        "name": {"type": "string", "minLength": 1},
+        "website": {"type": "string", "minLength": 1, "description": "Supplied entry URL, which may identify a collection."},
+        "scope": {"type": "string", "minLength": 1, "description": "Assessed service and scope, including any uncertainty about its identity."}
+      }
     },
     "resource_functions": {
       "type": "array",
@@ -96,7 +100,7 @@
         "allOf": [
           {"if": {"properties": {"outcome": {"const": "unknown"}}, "required": ["outcome"]}, "then": {"required": ["reason"]}},
           {"if": {"properties": {"outcome": {"const": "not_applicable"}}, "required": ["outcome"]}, "then": {"required": ["exclusion"]}},
-          {"if": {"properties": {"outcome": {"enum": ["met", "unmet"]}}, "required": ["outcome"]}, "then": {"required": ["evidence_ids"]}}
+          {"if": {"properties": {"outcome": {"enum": ["met", "unmet"]}}, "required": ["outcome"]}, "then": {"required": ["evidence_ids"], "properties": {"evidence_ids": {"minItems": 1}}}}
         ]
       }
     },

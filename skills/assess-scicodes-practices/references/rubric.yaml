@@ -12,6 +12,7 @@ status_note: >
   with verified, anchored criteria before using this rubric for judgments.
 
 baseline:
+  # Selected source ID (string), or null while unresolved; copied to assessment baseline.id when pinned.
   selected: null
   selection_note: >
     No baseline was explicitly selected and none could be verified. Candidate:

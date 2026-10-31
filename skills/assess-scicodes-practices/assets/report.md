@@ -3,6 +3,7 @@
 > **Member-review draft. Experimental.** Not a certification or ranking. Practice results follow the ordered rules in the skill's `rubric.yaml`. Passing structural validation does not establish that findings are correct.
 
 - Website: {{website}}
+- Assessed service and scope: {{member_scope}}
 - Audit date: {{audit_date}}
 - Resource functions: {{resource_functions_with_basis}}
 - Baseline: {{baseline_id_version_status}} | Rubric: {{rubric_version}} | Skill: {{skill_version}} | Model: {{model_or_unknown}}
