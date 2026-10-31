@@ -1,0 +1,500 @@
+{
+  "member": {
+    "name": "Example Fictional Registry",
+    "website": "https://registry.example.org"
+  },
+  "resource_functions": [
+    {
+      "tag": "indexing",
+      "basis": "inferred",
+      "uncertainty": "Fictional; no real resource was inspected."
+    },
+    {
+      "tag": "submissions",
+      "basis": "supplied"
+    }
+  ],
+  "audit_date": "2026-01-01",
+  "access_limitations": [
+    "FICTIONAL FIXTURE: no real member or website was audited."
+  ],
+  "baseline": {
+    "id": "S4",
+    "version": "10.7717/peerj-cs.1023 (2022-08-08)",
+    "status": "pinned"
+  },
+  "skill_version": "0.1.0",
+  "rubric_version": "0.1.0-draft",
+  "model": "unknown",
+  "review": {
+    "audience": "member_review_draft",
+    "status": "draft",
+    "public_export_sanitized": false
+  },
+  "evidence": [
+    {
+      "id": "E1",
+      "source_location": "https://registry.example.org/about",
+      "accessed": "2026-01-01",
+      "provenance": "public_statement",
+      "visibility": "public",
+      "excerpt": "Fictional page describing the registry."
+    },
+    {
+      "id": "E2",
+      "source_location": "Restricted: fictional maintainer email, 2025-12-15",
+      "accessed": "2026-01-01",
+      "provenance": "maintainer_assertion",
+      "visibility": "restricted"
+    }
+  ],
+  "findings": [
+    {
+      "criterion_id": "BP1.1",
+      "outcome": "unknown",
+      "reason": "evidence_inaccessible",
+      "note": "Fictional fixture: sufficient evidence was not supplied for this criterion."
+    },
+    {
+      "criterion_id": "BP1.2",
+      "outcome": "unknown",
+      "reason": "evidence_inaccessible",
+      "note": "Fictional fixture: sufficient evidence was not supplied for this criterion."
+    },
+    {
+      "criterion_id": "BP1.3",
+      "outcome": "unknown",
+      "reason": "evidence_inaccessible",
+      "note": "Fictional fixture: sufficient evidence was not supplied for this criterion."
+    },
+    {
+      "criterion_id": "BP2.1",
+      "outcome": "unknown",
+      "reason": "evidence_inaccessible",
+      "note": "Fictional fixture: sufficient evidence was not supplied for this criterion."
+    },
+    {
+      "criterion_id": "BP2.2",
+      "outcome": "unknown",
+      "reason": "evidence_inaccessible",
+      "note": "Fictional fixture: sufficient evidence was not supplied for this criterion."
+    },
+    {
+      "criterion_id": "BP2.3",
+      "outcome": "unknown",
+      "reason": "evidence_inaccessible",
+      "note": "Fictional fixture: sufficient evidence was not supplied for this criterion."
+    },
+    {
+      "criterion_id": "BP2.4",
+      "outcome": "unknown",
+      "reason": "evidence_inaccessible",
+      "note": "Fictional fixture: sufficient evidence was not supplied for this criterion."
+    },
+    {
+      "criterion_id": "BP2.5",
+      "outcome": "unknown",
+      "reason": "evidence_inaccessible",
+      "note": "Fictional fixture: sufficient evidence was not supplied for this criterion."
+    },
+    {
+      "criterion_id": "BP2.6",
+      "outcome": "unknown",
+      "reason": "evidence_inaccessible",
+      "note": "Fictional fixture: sufficient evidence was not supplied for this criterion."
+    },
+    {
+      "criterion_id": "BP3.1",
+      "outcome": "unknown",
+      "reason": "evidence_inaccessible",
+      "note": "Fictional fixture: sufficient evidence was not supplied for this criterion."
+    },
+    {
+      "criterion_id": "BP3.2",
+      "outcome": "unknown",
+      "reason": "evidence_inaccessible",
+      "note": "Fictional fixture: sufficient evidence was not supplied for this criterion."
+    },
+    {
+      "criterion_id": "BP3.3",
+      "outcome": "unknown",
+      "reason": "evidence_inaccessible",
+      "note": "Fictional fixture: sufficient evidence was not supplied for this criterion."
+    },
+    {
+      "criterion_id": "BP3.4",
+      "outcome": "unknown",
+      "reason": "evidence_inaccessible",
+      "note": "Fictional fixture: sufficient evidence was not supplied for this criterion."
+    },
+    {
+      "criterion_id": "BP3.5",
+      "outcome": "unknown",
+      "reason": "evidence_inaccessible",
+      "note": "Fictional fixture: sufficient evidence was not supplied for this criterion."
+    },
+    {
+      "criterion_id": "BP3.6",
+      "outcome": "unknown",
+      "reason": "evidence_inaccessible",
+      "note": "Fictional fixture: sufficient evidence was not supplied for this criterion."
+    },
+    {
+      "criterion_id": "BP3.7",
+      "outcome": "unknown",
+      "reason": "evidence_inaccessible",
+      "note": "Fictional fixture: sufficient evidence was not supplied for this criterion."
+    },
+    {
+      "criterion_id": "BP3.8",
+      "outcome": "unknown",
+      "reason": "evidence_inaccessible",
+      "note": "Fictional fixture: sufficient evidence was not supplied for this criterion."
+    },
+    {
+      "criterion_id": "BP4.1",
+      "outcome": "unknown",
+      "reason": "evidence_inaccessible",
+      "note": "Fictional fixture: sufficient evidence was not supplied for this criterion."
+    },
+    {
+      "criterion_id": "BP4.2",
+      "outcome": "unknown",
+      "reason": "evidence_inaccessible",
+      "note": "Fictional fixture: sufficient evidence was not supplied for this criterion."
+    },
+    {
+      "criterion_id": "BP4.3",
+      "outcome": "unknown",
+      "reason": "evidence_inaccessible",
+      "note": "Fictional fixture: sufficient evidence was not supplied for this criterion."
+    },
+    {
+      "criterion_id": "BP4.4",
+      "outcome": "unknown",
+      "reason": "evidence_inaccessible",
+      "note": "Fictional fixture: sufficient evidence was not supplied for this criterion."
+    },
+    {
+      "criterion_id": "BP4.5",
+      "outcome": "unknown",
+      "reason": "evidence_inaccessible",
+      "note": "Fictional fixture: sufficient evidence was not supplied for this criterion."
+    },
+    {
+      "criterion_id": "BP4.6",
+      "outcome": "unknown",
+      "reason": "evidence_inaccessible",
+      "note": "Fictional fixture: sufficient evidence was not supplied for this criterion."
+    },
+    {
+      "criterion_id": "BP5.1",
+      "outcome": "unknown",
+      "reason": "evidence_inaccessible",
+      "note": "Fictional fixture: sufficient evidence was not supplied for this criterion."
+    },
+    {
+      "criterion_id": "BP5.2",
+      "outcome": "unknown",
+      "reason": "evidence_inaccessible",
+      "note": "Fictional fixture: sufficient evidence was not supplied for this criterion."
+    },
+    {
+      "criterion_id": "BP6.1",
+      "outcome": "unknown",
+      "reason": "evidence_inaccessible",
+      "note": "Fictional fixture: sufficient evidence was not supplied for this criterion."
+    },
+    {
+      "criterion_id": "BP6.2",
+      "outcome": "unknown",
+      "reason": "evidence_inaccessible",
+      "note": "Fictional fixture: sufficient evidence was not supplied for this criterion."
+    },
+    {
+      "criterion_id": "BP6.3",
+      "outcome": "unknown",
+      "reason": "evidence_inaccessible",
+      "note": "Fictional fixture: sufficient evidence was not supplied for this criterion."
+    },
+    {
+      "criterion_id": "BP6.4",
+      "outcome": "unknown",
+      "reason": "evidence_inaccessible",
+      "note": "Fictional fixture: sufficient evidence was not supplied for this criterion."
+    },
+    {
+      "criterion_id": "BP6.5",
+      "outcome": "unknown",
+      "reason": "evidence_inaccessible",
+      "note": "Fictional fixture: sufficient evidence was not supplied for this criterion."
+    },
+    {
+      "criterion_id": "BP7.1",
+      "outcome": "unknown",
+      "reason": "evidence_inaccessible",
+      "note": "Fictional fixture: sufficient evidence was not supplied for this criterion."
+    },
+    {
+      "criterion_id": "BP7.2",
+      "outcome": "unknown",
+      "reason": "evidence_inaccessible",
+      "note": "Fictional fixture: sufficient evidence was not supplied for this criterion."
+    },
+    {
+      "criterion_id": "BP7.3",
+      "outcome": "unknown",
+      "reason": "evidence_inaccessible",
+      "note": "Fictional fixture: sufficient evidence was not supplied for this criterion."
+    },
+    {
+      "criterion_id": "BP7.4",
+      "outcome": "unknown",
+      "reason": "evidence_inaccessible",
+      "note": "Fictional fixture: sufficient evidence was not supplied for this criterion."
+    },
+    {
+      "criterion_id": "BP7.5",
+      "outcome": "unknown",
+      "reason": "evidence_inaccessible",
+      "note": "Fictional fixture: sufficient evidence was not supplied for this criterion."
+    },
+    {
+      "criterion_id": "BP7.6",
+      "outcome": "unknown",
+      "reason": "evidence_inaccessible",
+      "note": "Fictional fixture: sufficient evidence was not supplied for this criterion."
+    },
+    {
+      "criterion_id": "BP7.7",
+      "outcome": "unknown",
+      "reason": "evidence_inaccessible",
+      "note": "Fictional fixture: sufficient evidence was not supplied for this criterion."
+    },
+    {
+      "criterion_id": "BP7.8",
+      "outcome": "unknown",
+      "reason": "evidence_inaccessible",
+      "note": "Fictional fixture: sufficient evidence was not supplied for this criterion."
+    },
+    {
+      "criterion_id": "BP7.9",
+      "outcome": "unknown",
+      "reason": "evidence_inaccessible",
+      "note": "Fictional fixture: sufficient evidence was not supplied for this criterion."
+    },
+    {
+      "criterion_id": "BP8.1",
+      "outcome": "unknown",
+      "reason": "evidence_inaccessible",
+      "note": "Fictional fixture: sufficient evidence was not supplied for this criterion."
+    },
+    {
+      "criterion_id": "BP8.2",
+      "outcome": "unknown",
+      "reason": "evidence_inaccessible",
+      "note": "Fictional fixture: sufficient evidence was not supplied for this criterion."
+    },
+    {
+      "criterion_id": "BP8.3",
+      "outcome": "unknown",
+      "reason": "evidence_inaccessible",
+      "note": "Fictional fixture: sufficient evidence was not supplied for this criterion."
+    },
+    {
+      "criterion_id": "BP8.4",
+      "outcome": "unknown",
+      "reason": "evidence_inaccessible",
+      "note": "Fictional fixture: sufficient evidence was not supplied for this criterion."
+    },
+    {
+      "criterion_id": "BP8.5",
+      "outcome": "unknown",
+      "reason": "evidence_inaccessible",
+      "note": "Fictional fixture: sufficient evidence was not supplied for this criterion."
+    },
+    {
+      "criterion_id": "BP8.6",
+      "outcome": "unknown",
+      "reason": "evidence_inaccessible",
+      "note": "Fictional fixture: sufficient evidence was not supplied for this criterion."
+    },
+    {
+      "criterion_id": "BP8.7",
+      "outcome": "unknown",
+      "reason": "evidence_inaccessible",
+      "note": "Fictional fixture: sufficient evidence was not supplied for this criterion."
+    },
+    {
+      "criterion_id": "BP8.8",
+      "outcome": "unknown",
+      "reason": "evidence_inaccessible",
+      "note": "Fictional fixture: sufficient evidence was not supplied for this criterion."
+    },
+    {
+      "criterion_id": "BP9.1",
+      "outcome": "unknown",
+      "reason": "evidence_inaccessible",
+      "note": "Fictional fixture: sufficient evidence was not supplied for this criterion."
+    },
+    {
+      "criterion_id": "BP9.2",
+      "outcome": "unknown",
+      "reason": "evidence_inaccessible",
+      "note": "Fictional fixture: sufficient evidence was not supplied for this criterion."
+    },
+    {
+      "criterion_id": "BP9.3",
+      "outcome": "unknown",
+      "reason": "evidence_inaccessible",
+      "note": "Fictional fixture: sufficient evidence was not supplied for this criterion."
+    },
+    {
+      "criterion_id": "BP9.4",
+      "outcome": "unknown",
+      "reason": "evidence_inaccessible",
+      "note": "Fictional fixture: sufficient evidence was not supplied for this criterion."
+    },
+    {
+      "criterion_id": "BP9.5",
+      "outcome": "unknown",
+      "reason": "evidence_inaccessible",
+      "note": "Fictional fixture: sufficient evidence was not supplied for this criterion."
+    }
+  ],
+  "practice_results": [
+    {
+      "practice_id": "BP1",
+      "result": "undetermined",
+      "counts": {
+        "met": 0,
+        "unmet": 0,
+        "unknown": 3,
+        "not_applicable": 0
+      },
+      "evidence_complete": false
+    },
+    {
+      "practice_id": "BP2",
+      "result": "undetermined",
+      "counts": {
+        "met": 0,
+        "unmet": 0,
+        "unknown": 6,
+        "not_applicable": 0
+      },
+      "evidence_complete": false
+    },
+    {
+      "practice_id": "BP3",
+      "result": "undetermined",
+      "counts": {
+        "met": 0,
+        "unmet": 0,
+        "unknown": 8,
+        "not_applicable": 0
+      },
+      "evidence_complete": false
+    },
+    {
+      "practice_id": "BP4",
+      "result": "undetermined",
+      "counts": {
+        "met": 0,
+        "unmet": 0,
+        "unknown": 6,
+        "not_applicable": 0
+      },
+      "evidence_complete": false
+    },
+    {
+      "practice_id": "BP5",
+      "result": "undetermined",
+      "counts": {
+        "met": 0,
+        "unmet": 0,
+        "unknown": 2,
+        "not_applicable": 0
+      },
+      "evidence_complete": false
+    },
+    {
+      "practice_id": "BP6",
+      "result": "undetermined",
+      "counts": {
+        "met": 0,
+        "unmet": 0,
+        "unknown": 5,
+        "not_applicable": 0
+      },
+      "evidence_complete": false
+    },
+    {
+      "practice_id": "BP7",
+      "result": "undetermined",
+      "counts": {
+        "met": 0,
+        "unmet": 0,
+        "unknown": 9,
+        "not_applicable": 0
+      },
+      "evidence_complete": false
+    },
+    {
+      "practice_id": "BP8",
+      "result": "undetermined",
+      "counts": {
+        "met": 0,
+        "unmet": 0,
+        "unknown": 8,
+        "not_applicable": 0
+      },
+      "evidence_complete": false
+    },
+    {
+      "practice_id": "BP9",
+      "result": "undetermined",
+      "counts": {
+        "met": 0,
+        "unmet": 0,
+        "unknown": 5,
+        "not_applicable": 0
+      },
+      "evidence_complete": false
+    }
+  ],
+  "actions": [
+    {
+      "id": "A1",
+      "type": "evidence_request",
+      "practice_id": "BP7",
+      "criterion_ids": [
+        "BP7.1"
+      ],
+      "change": "Ask the maintainer to point to any published privacy statement.",
+      "responsible_role": "Registry maintainer",
+      "completion_check": "A public URL or a confirmation that none exists is recorded."
+    },
+    {
+      "id": "A2",
+      "type": "evidence_request",
+      "practice_id": "BP5",
+      "criterion_ids": [
+        "BP5.1"
+      ],
+      "change": "Ask the maintainer where the metadata schema is documented.",
+      "responsible_role": "Registry maintainer",
+      "completion_check": "A public URL or a confirmation that none exists is recorded."
+    }
+  ],
+  "verification": [
+    {
+      "evidence_ids": [
+        "E1"
+      ],
+      "selection": "sample",
+      "checked": "Re-read the fictional page and confirmed the excerpt.",
+      "same_agent": true
+    }
+  ]
+}

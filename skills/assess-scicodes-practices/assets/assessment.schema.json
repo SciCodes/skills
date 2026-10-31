@@ -1,0 +1,181 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.org/schemas/scicodes-assessment.schema.json",
+  "title": "SciCodes practices assessment (member-review draft)",
+  "description": "Structure only. Score derivation, criterion coverage, and cross-references are checked by scripts/validate.py against references/rubric.yaml. Passing validation does not establish that findings are correct.",
+  "type": "object",
+  "required": ["member", "resource_functions", "audit_date", "access_limitations", "baseline", "skill_version", "rubric_version", "model", "review", "evidence", "findings", "practice_results", "actions", "verification"],
+  "additionalProperties": false,
+  "properties": {
+    "member": {
+      "type": "object",
+      "required": ["name", "website"],
+      "additionalProperties": false,
+      "properties": {
+        "name": {"type": "string", "minLength": 1},
+        "website": {"type": "string", "minLength": 1, "description": "Supplied entry URL, which may identify a collection."},
+        "scope": {"type": "string", "minLength": 1, "description": "Assessed service and scope, including any uncertainty about its identity."}
+      }
+    },
+    "resource_functions": {
+      "type": "array",
+      "description": "Suggested tags: indexing, hosting, submissions, accounts; other tags allowed.",
+      "items": {
+        "type": "object",
+        "required": ["tag", "basis"],
+        "additionalProperties": false,
+        "properties": {
+          "tag": {"type": "string", "minLength": 1},
+          "basis": {"enum": ["supplied", "inferred"]},
+          "uncertainty": {"type": "string"}
+        }
+      }
+    },
+    "audit_date": {"type": "string", "format": "date"},
+    "access_limitations": {"type": "array", "items": {"type": "string"}},
+    "baseline": {
+      "type": "object",
+      "required": ["id", "version", "status"],
+      "additionalProperties": false,
+      "properties": {
+        "id": {"type": "string"},
+        "version": {"type": "string"},
+        "status": {"enum": ["pinned", "unresolved", "mismatch_deferred"]},
+        "note": {"type": "string"}
+      }
+    },
+    "skill_version": {"type": "string"},
+    "rubric_version": {"type": "string"},
+    "model": {"type": "string", "description": "Model identity, or \"unknown\"."},
+    "review": {
+      "type": "object",
+      "required": ["audience", "status", "public_export_sanitized"],
+      "additionalProperties": false,
+      "properties": {
+        "audience": {"const": "member_review_draft"},
+        "status": {"enum": ["draft", "member_reviewed", "approved_for_publication"]},
+        "public_export_sanitized": {"type": "boolean"},
+        "reviewer": {"type": "string"},
+        "reviewed_at": {"type": "string"}
+      }
+    },
+    "evidence": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "source_location", "accessed", "provenance", "visibility"],
+        "additionalProperties": false,
+        "properties": {
+          "id": {"type": "string", "pattern": "^E[0-9]+$"},
+          "source_location": {"type": "string", "minLength": 1},
+          "accessed": {"type": "string", "format": "date"},
+          "provenance": {"enum": ["public_statement", "maintainer_assertion", "observed_behavior", "repository_code", "deployed_behavior", "internal_document", "historical_record"]},
+          "visibility": {"enum": ["public", "restricted"]},
+          "excerpt": {"type": "string", "description": "Short excerpt or observation. Omit for restricted evidence when a reference suffices."},
+          "archive_url": {"type": "string"}
+        }
+      }
+    },
+    "findings": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["criterion_id", "outcome"],
+        "additionalProperties": false,
+        "properties": {
+          "criterion_id": {"type": "string"},
+          "outcome": {"enum": ["met", "unmet", "unknown", "not_applicable"]},
+          "reason": {"enum": ["applicability_unconfirmed", "not_found_after_search", "evidence_inaccessible", "evidence_restricted", "baseline_unresolved"]},
+          "evidence_ids": {"type": "array", "items": {"type": "string", "pattern": "^E[0-9]+$"}},
+          "note": {"type": "string"},
+          "member_confirmation_requested": {"type": "boolean"},
+          "basis_publicly_verifiable": {"type": "boolean", "description": "Must be false when supported only by restricted evidence."},
+          "exclusion": {
+            "type": "object",
+            "required": ["basis", "confirmed_by", "confirmed_at"],
+            "additionalProperties": false,
+            "properties": {"basis": {"type": "string", "minLength": 1}, "confirmed_by": {"type": "string", "minLength": 1}, "confirmed_at": {"type": "string", "minLength": 1}}
+          }
+        },
+        "allOf": [
+          {"if": {"properties": {"outcome": {"const": "unknown"}}, "required": ["outcome"]}, "then": {"required": ["reason"]}},
+          {"if": {"properties": {"outcome": {"const": "not_applicable"}}, "required": ["outcome"]}, "then": {"required": ["exclusion"]}},
+          {"if": {"properties": {"outcome": {"enum": ["met", "unmet"]}}, "required": ["outcome"]}, "then": {"required": ["evidence_ids"], "properties": {"evidence_ids": {"minItems": 1}}}}
+        ]
+      }
+    },
+    "practice_results": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["practice_id", "result", "counts", "evidence_complete"],
+        "additionalProperties": false,
+        "properties": {
+          "practice_id": {"type": "string"},
+          "result": {"enum": ["score_0", "score_1", "score_2", "score_3", "score_4", "undetermined", "not_applicable", "invalid"]},
+          "counts": {
+            "type": "object",
+            "required": ["met", "unmet", "unknown", "not_applicable"],
+            "additionalProperties": false,
+            "properties": {
+              "met": {"type": "integer", "minimum": 0},
+              "unmet": {"type": "integer", "minimum": 0},
+              "unknown": {"type": "integer", "minimum": 0},
+              "not_applicable": {"type": "integer", "minimum": 0}
+            }
+          },
+          "evidence_complete": {"type": "boolean"},
+          "strengths": {"type": "array", "items": {"type": "string"}},
+          "gaps": {"type": "array", "items": {"type": "string"}}
+        }
+      }
+    },
+    "actions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "type", "practice_id", "change", "responsible_role", "completion_check"],
+        "additionalProperties": false,
+        "properties": {
+          "id": {"type": "string", "pattern": "^A[0-9]+$"},
+          "type": {"enum": ["evidence_request", "baseline_improvement", "optional_enhancement"]},
+          "practice_id": {"type": "string"},
+          "criterion_ids": {"type": "array", "items": {"type": "string"}},
+          "change": {"type": "string", "minLength": 1},
+          "responsible_role": {"type": "string", "minLength": 1},
+          "completion_check": {"type": "string", "minLength": 1},
+          "priority": {"type": "integer", "minimum": 1},
+          "effort": {"type": "string", "description": "Optional; state units, assumptions, and separate hands-on work from approval delay."}
+        }
+      }
+    },
+    "verification": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["evidence_ids", "selection", "checked", "same_agent"],
+        "additionalProperties": false,
+        "properties": {
+          "evidence_ids": {"type": "array", "minItems": 1, "items": {"type": "string", "pattern": "^E[0-9]+$"}},
+          "selection": {"enum": ["negative", "disputed", "consequential", "sample"]},
+          "checked": {"type": "string", "minLength": 1},
+          "same_agent": {"type": "boolean", "description": "True means this is not independent review."}
+        }
+      }
+    },
+    "historical_comparison": {
+      "type": "array",
+      "description": "Optional; see references/assessment-2023-crosswalk.md for mapping limits.",
+      "items": {
+        "type": "object",
+        "required": ["practice_id", "reference", "difference_category"],
+        "additionalProperties": false,
+        "properties": {
+          "practice_id": {"type": "string"},
+          "reference": {"type": "string", "description": "Original label/value and source location, preserved verbatim."},
+          "difference_category": {"enum": ["documented_resource_change", "newly_discovered_evidence", "changed_rubric_or_interpretation", "access_or_method_difference", "unknown_cause", "no_difference"]}
+        }
+      }
+    }
+  }
+}
