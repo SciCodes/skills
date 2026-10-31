@@ -1,18 +1,28 @@
 PYTHON ?= python3
+VENV ?= .venv
+VENV_PYTHON := $(VENV)/bin/python
+.DEFAULT_GOAL := check
 
-.PHONY: lint validate check eval
+.PHONY: setup lint validate check eval
 
-lint:
-	ruff check scripts tests
-	yamllint -c .yamllint.yml .
-	pymarkdown --config .pymarkdown.json scan README.md AGENTS.md skills tests
+setup: $(VENV)/.dev-installed
 
-validate:
-	$(PYTHON) scripts/validate.py
-	$(PYTHON) -m unittest discover tests
+$(VENV)/.dev-installed: requirements-dev.txt
+	$(PYTHON) -m venv $(VENV)
+	$(VENV_PYTHON) -m pip install -r requirements-dev.txt
+	touch $@
+
+lint: setup
+	$(VENV)/bin/ruff check scripts tests
+	$(VENV)/bin/yamllint -c .yamllint.yml .
+	$(VENV)/bin/pymarkdown --config .pymarkdown.json scan README.md AGENTS.md skills tests
+
+validate: setup
+	$(VENV_PYTHON) scripts/validate.py
+	$(VENV_PYTHON) -m unittest discover tests
 
 check: lint validate
 
 # Needs a model; set SCICODES_EVAL_CMD (see scripts/eval.py). May incur cost.
-eval:
-	$(PYTHON) scripts/eval.py
+eval: setup
+	$(VENV_PYTHON) scripts/eval.py

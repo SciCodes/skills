@@ -27,12 +27,14 @@ Assumptions: the agent can browse public web pages (otherwise it assesses only e
 
 
 #### npx
+
 ```bash
 npx skills add SciCodes/skills --list
 npx skills add SciCodes/skills
 ```
 
 #### gh cli
+
 ```bash
 gh skill install SciCodes/skills --all
 ```
@@ -43,10 +45,12 @@ gh skill install SciCodes/skills --all
 ### Development
 
 ```text
-pip install -r requirements-dev.txt
+make setup      # create .venv and install development dependencies
 make check      # lint + validate (default local and CI check)
 make eval       # optional; needs a model (see scripts/eval.py), may incur cost
 ```
+
+Make targets use `.venv` directly and run setup automatically when needed; activation is unnecessary. Python 3 with `venv` support is required. Set `PYTHON` to choose the interpreter or `VENV` to choose a different environment directory.
 
 `make validate` checks skill frontmatter and reference paths, rubric and schema validity, fixture validation, and the score boundary tests. The fixture in `tests/fixtures/` is fictional and uses reserved domains.
 
@@ -60,6 +64,6 @@ Original contributions are under the Apache License 2.0 (the existing `LICENSE`)
 - Selected published baseline: Garijo et al. (2022), <https://doi.org/10.7717/peerj-cs.1023>
 - 2023 self-assessment: <https://docs.google.com/spreadsheets/d/1Ud2qsplv_17AjXKox7azES-L7LTqzj5rXaSpEaFAIjw/edit?gid=0#gid=0>
 
-The supplied `peerj-cs-08-1023.pdf` has been read and pinned by publication date, DOI, and SHA-256 in the rubric. 
+The supplied `peerj-cs-08-1023.pdf` has been read and pinned by publication date, DOI, and SHA-256 in the rubric.
 
 A user-supplied `2023-9 Best Practices Self Assessment.ods` export has been read; its provenance and historical comparison limits are recorded in `skills/assess-scicodes-practices/references/assessment-2023-crosswalk.md`.
