@@ -6,7 +6,7 @@ Usage:
   python scripts/validate.py ASSESSMENT.json    validate one assessment
 
 Checks structure and consistency only. Passing does not establish that the
-underlying findings are correct. Tier decisions come from the ordered rules in
+underlying findings are correct. Score decisions come from the ordered rules in
 rubric.yaml; this module only interprets them.
 """
 import json
@@ -24,7 +24,7 @@ SKILL = ROOT / "skills" / "assess-scicodes-practices"
 RUBRIC_PATH = SKILL / "references" / "rubric.yaml"
 SCHEMA_PATH = SKILL / "assets" / "assessment.schema.json"
 OUTCOMES = ("met", "unmet", "unknown", "not_applicable")
-CONDITION_KEYS = {"exact", "min", "equals_total", "structure_valid", "otherwise"}
+CONDITION_KEYS = {"exact", "min", "equals_total", "structure_valid", "otherwise", "max_met_fraction"}
 
 
 def load_rubric(path=RUBRIC_PATH):
@@ -102,6 +102,10 @@ def check_rubric(rubric):
             errors.append("final decision rule must be standalone otherwise: true")
         if "structure_valid" in when and type(when["structure_valid"]) is not bool:
             errors.append(f"{label} has invalid structure_valid condition")
+        if "max_met_fraction" in when:
+            fraction = when["max_met_fraction"]
+            if type(fraction) not in (int, float) or not 0 <= fraction <= 1:
+                errors.append(f"{label} has invalid max_met_fraction condition")
         for key in ("exact", "min"):
             if key not in when:
                 continue
@@ -140,7 +144,7 @@ def _vocabulary(values):
 
 
 def check_configuration(rubric, schema):
-    """Validate configuration before any assessment or tier checks."""
+    """Validate configuration before any assessment or score checks."""
     errors = [f"rubric: {e}" for e in check_rubric(rubric)]
     try:
         Draft202012Validator.check_schema(schema)
@@ -195,6 +199,10 @@ def derive_result(counts, rules, structure_valid=True):
             continue
         if "equals_total" in when and sum(counts[o] for o in when["equals_total"]) != total:
             continue
+        if "max_met_fraction" in when:
+            applicable = counts["met"] + counts["unmet"]
+            if not applicable or counts["met"] / applicable > when["max_met_fraction"]:
+                continue
         return rule["result"]
     return "invalid"
 

@@ -1,7 +1,7 @@
 # Agent instructions
 
 - Run `make check` before committing (`pip install -r requirements-dev.txt` first).
-- Tier logic lives only in `skills/assess-scicodes-practices/references/rubric.yaml` (`decision_rules`). Do not duplicate it in code, templates, or docs; `scripts/validate.py` interprets the rules.
+- Score logic lives only in `skills/assess-scicodes-practices/references/rubric.yaml` (`decision_rules`). Do not duplicate it in code, templates, or docs; `scripts/validate.py` interprets the rules.
 - Never write quotations, anchors, criteria, or 2023 historical values that were not read from the primary source. Mark them unresolved or pending instead.
 - Do not run real member audits or publish findings. Fixtures must be fictional and use reserved domains (example.org, example.com).
 

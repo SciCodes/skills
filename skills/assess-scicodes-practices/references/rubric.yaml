@@ -1,28 +1,25 @@
 # Experimental assessment interpretation pending SciCodes review.
 # This file is the single authoritative home for criteria, applicability
-# guidance, and tier decision rules. Do not restate tier logic elsewhere.
+# guidance, and score decision rules. Do not restate score logic elsewhere.
 rubric_version: 0.1.0-draft
-status: experimental_skeleton_pending_scicodes_review
+status: experimental_source_backed_pending_scicodes_review
 status_note: >
-  Detailed baseline criteria could not be transcribed because the primary
-  sources were inaccessible during repository initialization (see baseline).
-  Each practice therefore carries one placeholder criterion with
-  source_status "unresolved". Overview headings cannot supply detailed
-  criteria, so no criterion text has been invented. Replace each placeholder
-  with verified, anchored criteria before using this rubric for judgments.
+  Source-backed assessment interpretation of Garijo et al. (2022), read from
+  the user-supplied published PDF. Criteria paraphrase the recommendations;
+  their grouping, applicability tests, and equal weighting are assessor
+  interpretations pending SciCodes review, not a certification standard.
 
 baseline:
-  # Selected source ID (string), or null while unresolved; copied to assessment baseline.id when pinned.
-  selected: null
+  selected: S4
   selection_note: >
-    No baseline was explicitly selected and none could be verified. Candidate:
-    the detailed guide below, or an authoritative journal version or successor
-    if one exists (not checked). Record the selected version and source anchors
-    here when resolved.
-  version: unresolved
+    Pin the supplied PeerJ Computer Science version of record, published
+    2022-08-08. Page 2 identifies it as an expansion of the 2020 concise guide.
+    No claim is made that a later successor has been checked. The 2023
+    scorecard supplies scoring conventions, not the scientific baseline.
+  version: "10.7717/peerj-cs.1023 (2022-08-08)"
   sources:
     - id: S1
-      role: detailed_guide_candidate
+      role: earlier_concise_guide
       url: https://arxiv.org/abs/2012.13117
       attempted_access: "2026-10-31"
       content_read: false
@@ -37,12 +34,73 @@ baseline:
       role: historical_self_assessment_2023
       url: https://docs.google.com/spreadsheets/d/1Ud2qsplv_17AjXKox7azES-L7LTqzj5rXaSpEaFAIjw/edit?gid=0#gid=0
       attempted_access: "2026-10-31"
-      content_read: false
-      limitation: Network access to this host was blocked; no repository copy or export was supplied.
+      content_read: true
+      supplied_file: 2023-9 Best Practices Self Assessment.ods
+      supplied_file_sha256: e367dccdbf30656799d48f15246b15428ca2b0e2a0f6a57363949e99ad43eee7
+      supplied_file_read: "2026-10-30"
+      source_anchor: Sheet1.B2:S3
+      limitation: Supplied export read; live sheet not verified. Detailed baseline criteria are not in the scorecard.
+    - id: S4
+      role: selected_published_guide
+      title: Nine best practices for research software registries and repositories
+      citation: Garijo et al. (2022), PeerJ Computer Science 8:e1023
+      url: https://doi.org/10.7717/peerj-cs.1023
+      published: "2022-08-08"
+      content_read: true
+      supplied_file: peerj-cs-08-1023.pdf
+      supplied_file_sha256: 60b53ad02cb024e960cb3e8c8d6cf6e102fbb1d7b23aaf8a64332f90a72e2747
+      supplied_file_read: "2026-10-30"
+      license: CC-BY-4.0
+      source_anchor: PDF pp. 6-12; Table 2, p. 14; Discussion, pp. 13-16
+      limitation: Supplied PDF read; current online version and successors not checked.
   practice_list_verification: >
-    Practice titles below came from a secondary web-search summary that named
-    the guide as its source. They are unverified against the primary source,
-    as is their order. Confirm BP1-BP9 before relying on them.
+    IDs and display titles follow the supplied scorecard. The article calls BP2
+    "Provide guidance for users" and BP5 "Document and share your metadata schema";
+    these are direct subject mappings, not different practices.
+
+criterion_policy:
+  source_text: Paraphrases, not quotations; page and paragraph or bullet anchors refer to S4.
+  selection: >
+    Include the nine sections' enumerated recommendations and their additional
+    should/advisable/consider guidance. Keep optional may/might suggestions
+    outside baseline counts. Named resources, technologies, licenses and
+    durations used as examples are not mandatory requirements.
+  granularity: >
+    Preserve each enumerated bullet as one criterion; additional recommendation
+    paragraphs are grouped by topic. A grouped criterion is met only when all
+    applicable parts are supported. This grouping affects scores and is an
+    assessor interpretation; compare versions before claiming improvement.
+  evidence: >
+    These are chiefly policy and guidance disclosure recommendations. An
+    applicable published statement can satisfy a disclosure criterion without
+    proving implementation of the promised service. Report that distinction.
+    A private policy draft alone does not establish public disclosure.
+  applicability: >
+    Apply to resource functions, not labels such as registry versus repository.
+    Explicit statements that a feature is absent can satisfy a disclosure
+    question; do not demand a feature merely to document it. Conditional
+    exclusions require documented member confirmation, otherwise unknown.
+    Lack of public evidence is unknown, not proof that a policy is absent.
+  legal_scope: >
+    Assess what policies disclose, not legal validity or compliance. Do not
+    adopt the article's legal examples as current legal advice.
+
+scorecard_alignment:
+  source: S3
+  scale_anchor: Sheet1.B2
+  interpretation: >
+    The scorecard allows each resource to interpret coverage using desirable
+    guidance items. For reproducibility this skill counts equally weighted,
+    confirmed applicable baseline criteria; confirmed exclusions are omitted.
+    Met criteria establish implementation of those items; no met criteria with
+    all applicable criteria confirmed unmet is operationalized as score 0.
+    Any unknown criterion defers the score. These are assessor conventions,
+    not additional requirements stated by the scorecard. Record applicability
+    decisions and confirm exclusions with the member before comparing scores.
+  historical_values: >
+    Preserve original scores, including fractions, N/A, blanks, and out-of-scale
+    entries without rounding or conversion. New derived scores use the declared
+    integer scale; unknown is not zero or N/A. Do not calculate member aggregates.
 
 outcomes: [met, unmet, unknown, not_applicable]
 
@@ -63,96 +121,562 @@ unknown_reasons:
 #   equals_total:  [outcomes]     summed count equals the total criterion count
 #   structure_valid: false        structural validation failed (rule 1 only)
 #   otherwise: true               always matches (final rule only)
-# Applicable criteria are those not confirmed not_applicable. Rule 2 is valid
-# because met and unmet criteria are both confirmed applicable, so remaining
-# unknowns cannot change the tier.
+# max_met_fraction: upper bound on met / (met + unmet), inclusive.
+# Rules defer unknowns before using coverage fractions. All exclusions are
+# handled before fractions, so zero-denominator fractions cannot assign scores.
 decision_rules:
   - id: R1
     result: invalid
     when: {structure_valid: false}
   - id: R2
-    result: tier_1
-    when: {min: {met: 1, unmet: 1}}
-  - id: R3
     result: undetermined
     when: {min: {unknown: 1}}
-  - id: R4
+  - id: R3
     result: not_applicable
     when: {equals_total: [not_applicable]}
+  - id: R4
+    result: score_0
+    when: {exact: {met: 0}, min: {unmet: 1}}
   - id: R5
-    result: tier_2
-    when: {exact: {unmet: 0, unknown: 0}, min: {met: 1}}
+    result: score_4
+    when: {exact: {unmet: 0}, min: {met: 1}}
   - id: R6
-    result: tier_0
-    when: {exact: {met: 0, unknown: 0}, min: {unmet: 1}}
+    result: score_1
+    when: {min: {met: 1}, max_met_fraction: 0.25}
   - id: R7
+    result: score_2
+    when: {min: {met: 1}, max_met_fraction: 0.5}
+  - id: R8
+    result: score_3
+    when: {min: {met: 1, unmet: 1}}
+  - id: R9
     result: invalid
     when: {otherwise: true}
 
+# Verbatim scale descriptions from the supplied scorecard, Sheet1.B2.
 results:
-  tier_0: All applicable baseline criteria are confirmed unmet.
-  tier_1: Confirmed applicable baseline criteria include both met and unmet.
-  tier_2: All applicable baseline criteria are met.
-  undetermined: Unknowns prevent a definitive tier.
-  not_applicable: All criteria are confirmed not applicable.
+  score_0: Best practice has not been implemented in any form
+  score_1: Have implemented the best practice, but it needs improvement/meets up to 25% of the recommended guidance
+  score_2: Have implemented the best practice, and it meets up to half of the recommended guidance
+  score_3: Have implemented the best practice, and it meets more than half but not all of the recommended guidance
+  score_4: Have implemented the best practice, and it meets all of the recommended guidance
+  not_applicable: Not applicable to the resource
+  undetermined: Evidence or baseline uncertainty prevents a score.
   invalid: Structure or coverage failure, or no rule matched.
 
-# Optional enhancements never enter baseline counts or tiers.
-optional_enhancements: []
-
-# Per criterion: text is source-supported; operational_interpretation is a
-# separately labeled assessor reading; kind distinguishes expectation,
-# recommendation, and example. Examples are never mandatory requirements.
+optional_enhancements:
+  - id: OPT1
+    practice_id: BP5
+    kind: recommendation
+    source_status: verified
+    source_anchor: S4, PDF pp. 9-10, metadata schema, paragraph beginning To improve
+    text: Provide a crosswalk to standard schemas and a complete example metadata record.
+    operational_interpretation: Optional may guidance; neither a crosswalk nor a particular target standard
+      is mandatory.
+  - id: OPT2
+    practice_id: BP6
+    kind: recommendation
+    source_status: verified
+    source_anchor: S4, PDF p. 10, conditions of use, paragraph beginning When writing
+    text: Document technical restrictions on API usage where an API exists.
+    operational_interpretation: Optional technical terms supplement the baseline metadata-use conditions.
+  - id: OPT3
+    practice_id: BP7
+    kind: recommendation
+    source_status: verified
+    source_anchor: S4, PDF p. 11, privacy policy, paragraph beginning When writing
+    text: Link third-party analytics privacy policies and reserve the right to update the privacy policy.
+    operational_interpretation: Optional suggestions; do not evaluate legal adequacy.
+  - id: OPT4
+    practice_id: BP9
+    kind: recommendation
+    source_status: verified
+    source_anchor: S4, PDF p. 12, end-of-life policy, paragraph beginning Publishing
+    text: Establish a formal preservation agreement with another resource or institution where appropriate.
+    operational_interpretation: A formal agreement is an optional preparation step, not a mandatory named partner.
 practices:
   - id: BP1
     title: Provide a public scope statement
-    title_status: unverified_secondary_source
+    title_status: verified_scorecard
     criteria:
-      -
-        id: BP1.1
-        kind: expectation
-        source_status: unresolved
-        source_anchor: null
-        text: "Placeholder: detailed baseline expectations not yet transcribed from the verified source."
-        operational_interpretation: null
-        applicability_guidance: "Define resource-function applicability once the source criteria are verified."
+      - id: BP1.1
+        kind: recommendation
+        source_status: verified
+        source_anchor: S4, PDF p. 6, scope statement, bullet 1
+        text: Describe accepted software in terms of scientific discipline, technical characteristics, and
+          administrative properties.
+        operational_interpretation: Look for an accessible scope statement addressing the relevant acceptance
+          dimensions; do not impose a particular discipline or software format.
+        applicability_guidance: Applies to all resources. Confirm any exclusion with the member; missing evidence
+          is unknown.
+      - id: BP1.2
+        kind: recommendation
+        source_status: verified
+        source_anchor: S4, PDF p. 6, scope statement, bullet 2
+        text: Describe software characteristics that exclude entries from the resource.
+        operational_interpretation: Accept explicit statements of unrestricted dimensions; absence of a restriction
+          in a search result is not an explicit policy.
+        applicability_guidance: Applies to all resources. Confirm any exclusion with the member; missing evidence
+          is unknown.
+      - id: BP1.3
+        kind: recommendation
+        source_status: verified
+        source_anchor: S4, PDF p. 6, scope statement, bullet 3
+        text: Describe notable exceptions to acceptance and exclusion rules, if any.
+        operational_interpretation: Check stated exceptions; do not invent exceptions or require the resource
+          to have them.
+        applicability_guidance: Conditional on exceptions existing. An explicit no-exceptions statement satisfies
+          disclosure; otherwise confirm applicability.
   - id: BP2
-    title: Provide guidance for users
-    title_status: unverified_secondary_source
+    title: Provide user guidance
+    title_status: verified_scorecard
     criteria:
-      - {id: BP2.1, kind: expectation, source_status: unresolved, source_anchor: null, text: "Placeholder: detailed baseline expectations not yet transcribed from the verified source.", operational_interpretation: null, applicability_guidance: "Define resource-function applicability once the source criteria are verified."}
+      - id: BP2.1
+        kind: recommendation
+        source_status: verified
+        source_anchor: S4, PDF p. 7, user guidance, bullet 1
+        text: Explain common user tasks such as searching and accessing an entry.
+        operational_interpretation: Check guidance for the tasks actually offered; the example tasks do not
+          require a specific interface.
+        applicability_guidance: Applies to all resources. Confirm any exclusion with the member; missing evidence
+          is unknown.
+      - id: BP2.2
+        kind: recommendation
+        source_status: verified
+        source_anchor: S4, PDF p. 7, user guidance, bullet 2
+        text: Answer frequent or anticipated user questions.
+        operational_interpretation: A FAQ, contextual help, or equivalent guidance can satisfy this recommendation.
+        applicability_guidance: Applies to all resources. Confirm any exclusion with the member; missing evidence
+          is unknown.
+      - id: BP2.3
+        kind: recommendation
+        source_status: verified
+        source_anchor: S4, PDF p. 7, user guidance, bullet 3
+        text: Identify a contact point for questions or help.
+        operational_interpretation: Look for a usable published support route; do not contact it during the
+          assessment.
+        applicability_guidance: Applies to all resources. Confirm any exclusion with the member; missing evidence
+          is unknown.
+      - id: BP2.4
+        kind: recommendation
+        source_status: verified
+        source_anchor: S4, PDF p. 7, user guidance, paragraph beginning When writing
+        text: Identify user types and corresponding use cases when developing guidance.
+        operational_interpretation: Assess whether guidance addresses identifiable audiences and their tasks;
+          a separate audience-analysis document is not required.
+        applicability_guidance: Applies to all resources. Confirm any exclusion with the member; missing evidence
+          is unknown.
+      - id: BP2.5
+        kind: recommendation
+        source_status: verified
+        source_anchor: S4, PDF p. 7, user guidance, paragraph beginning When writing
+        text: Offer guidance in multiple forms.
+        operational_interpretation: Look for complementary forms such as prompts and linked explanations; the
+          named formats are examples, not a mandatory checklist.
+        applicability_guidance: Applies to all resources. Confirm any exclusion with the member; missing evidence
+          is unknown.
+      - id: BP2.6
+        kind: recommendation
+        source_status: verified
+        source_anchor: S4, PDF p. 7, user guidance, paragraph beginning When writing
+        text: Document machine-readable access and its supported formats, including content negotiation where
+          enabled.
+        operational_interpretation: Follow API documentation or an interface-provided pointer; do not require
+          an API, JSON-LD, XML, or content negotiation.
+        applicability_guidance: Applies when machine-readable access is offered. Content-negotiation details
+          apply only when enabled.
   - id: BP3
     title: Provide guidance to software contributors
-    title_status: unverified_secondary_source
+    title_status: verified_scorecard
     criteria:
-      - {id: BP3.1, kind: expectation, source_status: unresolved, source_anchor: null, text: "Placeholder: detailed baseline expectations not yet transcribed from the verified source.", operational_interpretation: null, applicability_guidance: "Define resource-function applicability once the source criteria are verified."}
+      - id: BP3.1
+        kind: recommendation
+        source_status: verified
+        source_anchor: S4, PDF p. 8, contributor policy, bullet 1
+        text: Describe who can and cannot submit entries or metadata.
+        operational_interpretation: Check eligibility and submission permissions in contributor-facing guidance.
+        applicability_guidance: Applies to contribution or record-update workflows, including mediated submissions.
+          Confirm exclusion only if no such workflow exists.
+      - id: BP3.2
+        kind: recommendation
+        source_status: verified
+        source_anchor: S4, PDF p. 8, contributor policy, bullet 2
+        text: Describe required and optional metadata for deposited software.
+        operational_interpretation: Check a documented distinction between required and optional submission
+          information.
+        applicability_guidance: Applies to contribution or record-update workflows, including mediated submissions.
+          Confirm exclusion only if no such workflow exists.
+      - id: BP3.3
+        kind: recommendation
+        source_status: verified
+        source_anchor: S4, PDF p. 8, contributor policy, bullet 3
+        text: Describe any review process.
+        operational_interpretation: A statement that there is no review process satisfies the disclosure question;
+          do not require review.
+        applicability_guidance: Applies to contribution or record-update workflows, including mediated submissions.
+          Confirm exclusion only if no such workflow exists.
+      - id: BP3.4
+        kind: recommendation
+        source_status: verified
+        source_anchor: S4, PDF p. 8, contributor policy, bullet 4
+        text: Describe any curation process.
+        operational_interpretation: An explicit no-curation statement is acceptable; assess disclosure, not
+          a required curation model.
+        applicability_guidance: Applies to contribution or record-update workflows, including mediated submissions.
+          Confirm exclusion only if no such workflow exists.
+      - id: BP3.5
+        kind: recommendation
+        source_status: verified
+        source_anchor: S4, PDF p. 8, contributor policy, bullet 5
+        text: Explain who can update entries, when updates occur, and how they are made.
+        operational_interpretation: Check the update workflow, including any policy against updates.
+        applicability_guidance: Applies to contribution or record-update workflows, including mediated submissions.
+          Confirm exclusion only if no such workflow exists.
+      - id: BP3.6
+        kind: recommendation
+        source_status: verified
+        source_anchor: S4, PDF p. 8, contributor policy, paragraph beginning Topics
+        text: Consider author contact when a contributor is not an author, including whether contact is required
+          or follows submission.
+        operational_interpretation: Look for the stated handling of third-party submissions, without requiring
+          a particular contact policy.
+        applicability_guidance: Applies if third-party contributions are allowed; otherwise document the exclusion.
+      - id: BP3.7
+        kind: recommendation
+        source_status: verified
+        source_anchor: S4, PDF p. 8, contributor policy, paragraph beginning Topics
+        text: Describe how persistent identifiers are assigned when used.
+        operational_interpretation: Check assignment guidance; do not require a DOI or another specific identifier.
+        applicability_guidance: Applies when persistent identifiers are assigned by or through the resource.
+      - id: BP3.8
+        kind: recommendation
+        source_status: verified
+        source_anchor: S4, PDF p. 8, contributor policy, paragraph beginning Topics
+        text: State that depositors must comply with applicable laws and avoid intentionally malicious conduct.
+        operational_interpretation: Assess the presence of this statement, not legal adequacy or actual depositor
+          behavior.
+        applicability_guidance: Applies to contribution or record-update workflows, including mediated submissions.
+          Confirm exclusion only if no such workflow exists.
   - id: BP4
     title: Establish an authorship policy
-    title_status: unverified_secondary_source
+    title_status: verified_scorecard
     criteria:
-      - {id: BP4.1, kind: expectation, source_status: unresolved, source_anchor: null, text: "Placeholder: detailed baseline expectations not yet transcribed from the verified source.", operational_interpretation: null, applicability_guidance: "Define resource-function applicability once the source criteria are verified."}
+      - id: BP4.1
+        kind: recommendation
+        source_status: verified
+        source_anchor: S4, PDF p. 9, authorship policy, bullet 1
+        text: Specify how authorship is determined by contributors or the resource.
+        operational_interpretation: Check authorship criteria without imposing a particular authorship definition.
+        applicability_guidance: Applies to all resources. Confirm any exclusion with the member; missing evidence
+          is unknown.
+      - id: BP4.2
+        kind: recommendation
+        source_status: verified
+        source_anchor: S4, PDF p. 9, authorship policy, bullet 2
+        text: Specify policies for changes to authorship.
+        operational_interpretation: Look for guidance on adding, removing, or correcting authorship.
+        applicability_guidance: Applies to all resources. Confirm any exclusion with the member; missing evidence
+          is unknown.
+      - id: BP4.3
+        kind: recommendation
+        source_status: verified
+        source_anchor: S4, PDF p. 9, authorship policy, bullet 3
+        text: Describe the process for resolving authorship disputes.
+        operational_interpretation: Check a published process or responsibility, without attempting to adjudicate
+          disputes.
+        applicability_guidance: Applies to all resources. Confirm any exclusion with the member; missing evidence
+          is unknown.
+      - id: BP4.4
+        kind: recommendation
+        source_status: verified
+        source_anchor: S4, PDF p. 8, authorship policy, final paragraph
+        text: Keep authorship policy consistent with resource citation policy.
+        operational_interpretation: Compare policy statements; software-specific citation requirements may
+          remain with owners.
+        applicability_guidance: Applies to all resources. Confirm any exclusion with the member; missing evidence
+          is unknown.
+      - id: BP4.5
+        kind: recommendation
+        source_status: verified
+        source_anchor: S4, PDF p. 9, authorship policy, paragraph beginning When defining
+        text: Consider credit for non-coders, author ordering, large author lists, and group or consortium
+          authorship.
+        operational_interpretation: Look for how the policy handles these cases; no particular ordering or
+          credit scheme is required.
+        applicability_guidance: Applies to all resources. Confirm any exclusion with the member; missing evidence
+          is unknown.
+      - id: BP4.6
+        kind: recommendation
+        source_status: verified
+        source_anchor: S4, PDF p. 9, authorship policy, paragraph beginning When defining
+        text: Consider a contribution-role vocabulary to describe author contributions.
+        operational_interpretation: Document evidence of consideration or an explained alternative; do not
+          require CRediT specifically.
+        applicability_guidance: Applies to all resources. Confirm any exclusion with the member; missing evidence
+          is unknown.
   - id: BP5
-    title: Share your metadata schema
-    title_status: unverified_secondary_source
+    title: Share metadata schema
+    title_status: verified_scorecard
     criteria:
-      - {id: BP5.1, kind: expectation, source_status: unresolved, source_anchor: null, text: "Placeholder: detailed baseline expectations not yet transcribed from the verified source.", operational_interpretation: null, applicability_guidance: "Define resource-function applicability once the source criteria are verified."}
+      - id: BP5.1
+        kind: recommendation
+        source_status: verified
+        source_anchor: S4, PDF p. 9, metadata schema, bullet 1
+        text: Publish the metadata schema and version, linking standard-schema documentation or documenting
+          a custom schema.
+        operational_interpretation: Check publicly available schema identification and version plus a reference,
+          description, or data dictionary; do not require CodeMeta or schema.org.
+        applicability_guidance: Applies to all resources. Confirm any exclusion with the member; missing evidence
+          is unknown.
+      - id: BP5.2
+        kind: recommendation
+        source_status: verified
+        source_anchor: S4, PDF p. 9, metadata schema, bullet 2
+        text: Describe expected submission metadata, required and optional fields, and their content formats.
+        operational_interpretation: Check field-level documentation; no particular metadata fields are imposed.
+        applicability_guidance: Applies to contribution or record-update workflows, including mediated submissions.
+          Confirm exclusion only if no such workflow exists.
   - id: BP6
     title: Stipulate conditions of use
-    title_status: unverified_secondary_source
+    title_status: verified_scorecard
     criteria:
-      - {id: BP6.1, kind: expectation, source_status: unresolved, source_anchor: null, text: "Placeholder: detailed baseline expectations not yet transcribed from the verified source.", operational_interpretation: null, applicability_guidance: "Assess against published expectations, not legal adequacy."}
+      - id: BP6.1
+        kind: recommendation
+        source_status: verified
+        source_anchor: S4, PDF p. 10, conditions of use, bullet 1
+        text: Include disclaimers about resource responsibility and liability.
+        operational_interpretation: Check published disclaimers; do not assess enforceability.
+        applicability_guidance: Applies to all resources. Confirm any exclusion with the member; missing evidence
+          is unknown.
+      - id: BP6.2
+        kind: recommendation
+        source_status: verified
+        source_anchor: S4, PDF p. 10, conditions of use, bullet 2
+        text: Provide license and copyright information for entries and for the resource as a whole.
+        operational_interpretation: Distinguish metadata licensing from software or binary licensing where
+          present; do not invent or require a specific license.
+        applicability_guidance: Applies to all resources. Confirm any exclusion with the member; missing evidence
+          is unknown.
+      - id: BP6.3
+        kind: recommendation
+        source_status: verified
+        source_anchor: S4, PDF p. 10, conditions of use, bullet 3 and introductory paragraph
+        text: State conditions and prohibitions for metadata use, including commercial and aggregate use.
+        operational_interpretation: Look for explicit reuse terms; do not infer permission from technical accessibility.
+        applicability_guidance: Applies to all resources. Confirm any exclusion with the member; missing evidence
+          is unknown.
+      - id: BP6.4
+        kind: recommendation
+        source_status: verified
+        source_anchor: S4, PDF p. 10, conditions of use, bullet 4
+        text: Provide a preferred format for citing software entries.
+        operational_interpretation: Accept a citation example or applicable guidance; do not impose a citation
+          style.
+        applicability_guidance: Applies to all resources. Confirm any exclusion with the member; missing evidence
+          is unknown.
+      - id: BP6.5
+        kind: recommendation
+        source_status: verified
+        source_anchor: S4, PDF p. 10, conditions of use, bullet 5
+        text: Provide a preferred format for attributing or citing the resource.
+        operational_interpretation: Distinguish resource attribution from citing an individual software entry.
+        applicability_guidance: Applies to all resources. Confirm any exclusion with the member; missing evidence
+          is unknown.
   - id: BP7
     title: State a privacy policy
-    title_status: unverified_secondary_source
+    title_status: verified_scorecard
     criteria:
-      - {id: BP7.1, kind: expectation, source_status: unresolved, source_anchor: null, text: "Placeholder: detailed baseline expectations not yet transcribed from the verified source.", operational_interpretation: null, applicability_guidance: "Assess against published expectations, not legal adequacy. Linked institutional policies count only where applicability is clear."}
+      - id: BP7.1
+        kind: recommendation
+        source_status: verified
+        source_anchor: S4, PDF p. 11, privacy policy, bullet 1
+        text: Describe information collected about users and its retention period.
+        operational_interpretation: Check the policy for collection and retention disclosures, including explicit
+          statements of no collection.
+        applicability_guidance: Applies to all resources. Confirm any exclusion with the member; missing evidence
+          is unknown.
+      - id: BP7.2
+        kind: recommendation
+        source_status: verified
+        source_anchor: S4, PDF p. 11, privacy policy, bullet 2
+        text: Describe how collected information, especially personal data, is used.
+        operational_interpretation: Assess declared purposes, not legal compliance.
+        applicability_guidance: Applies to all resources. Confirm any exclusion with the member; missing evidence
+          is unknown.
+      - id: BP7.3
+        kind: recommendation
+        source_status: verified
+        source_anchor: S4, PDF p. 11, privacy policy, bullet 3
+        text: State whether tracking occurs and, if so, what is tracked and how.
+        operational_interpretation: An explicit no-tracking statement can satisfy this criterion; do not assume
+          tracking from site technology.
+        applicability_guidance: Applies to all resources. Confirm any exclusion with the member; missing evidence
+          is unknown.
+      - id: BP7.4
+        kind: recommendation
+        source_status: verified
+        source_anchor: S4, PDF p. 11, privacy policy, bullet 4
+        text: State whether cookies are used.
+        operational_interpretation: An explicit no-cookies statement can satisfy disclosure; a particular consent
+          mechanism is not prescribed here.
+        applicability_guidance: Applies to all resources. Confirm any exclusion with the member; missing evidence
+          is unknown.
+      - id: BP7.5
+        kind: recommendation
+        source_status: verified
+        source_anchor: S4, PDF p. 11, privacy policy, paragraph beginning When writing
+        text: Detail personal data collected, the justification, and whether they are sold or shared.
+        operational_interpretation: Look for these disclosures, including negative declarations where relevant.
+        applicability_guidance: Personal-data details apply when data are collected; explicitly documented
+          non-collection can satisfy the disclosure.
+      - id: BP7.6
+        kind: recommendation
+        source_status: verified
+        source_anchor: S4, PDF p. 11, privacy policy, paragraph beginning When writing
+        text: Explicitly list third-party tools used to collect analytics.
+        operational_interpretation: Check named tools where analytics are used; linking their privacy policies
+          is optional.
+        applicability_guidance: Applies when third-party analytics are used; confirm an exclusion otherwise.
+      - id: BP7.7
+        kind: recommendation
+        source_status: verified
+        source_anchor: S4, PDF p. 11, privacy policy, paragraph beginning When writing
+        text: Announce potential emails resulting from visiting or downloading content.
+        operational_interpretation: Check disclosure of such solicitations or notifications; do not send or
+          subscribe to emails.
+        applicability_guidance: Applies when these email workflows exist.
+      - id: BP7.8
+        kind: recommendation
+        source_status: verified
+        source_anchor: S4, PDF p. 11, privacy policy, paragraph beginning When writing
+        text: Explain privacy protections and state whether the resource complies with relevant privacy laws
+          where applicable.
+        operational_interpretation: Assess disclosure of protections and the resource's compliance statements
+          only; do not certify compliance or infer jurisdiction.
+        applicability_guidance: Applies to all resources. Confirm any exclusion with the member; missing evidence
+          is unknown.
+      - id: BP7.9
+        kind: recommendation
+        source_status: verified
+        source_anchor: S4, PDF p. 11, privacy policy, paragraph beginning When writing
+        text: Describe how users can request removal of their personal information.
+        operational_interpretation: Look for a request mechanism; do not submit a request.
+        applicability_guidance: Applies when personal information is held. Confirm exclusion for resources
+          that hold none.
   - id: BP8
     title: Provide a retention policy
-    title_status: unverified_secondary_source
+    title_status: verified_scorecard
     criteria:
-      - {id: BP8.1, kind: expectation, source_status: unresolved, source_anchor: null, text: "Placeholder: detailed baseline expectations not yet transcribed from the verified source.", operational_interpretation: null, applicability_guidance: "Define resource-function applicability once the source criteria are verified."}
+      - id: BP8.1
+        kind: recommendation
+        source_status: verified
+        source_anchor: S4, PDF p. 11, retention policy, bullet 1
+        text: State how long metadata and files are expected to be retained.
+        operational_interpretation: Assess metadata for registries and metadata plus stored files for hosting
+          resources; do not require permanent retention.
+        applicability_guidance: Applies to all resources. Confirm any exclusion with the member; missing evidence
+          is unknown.
+      - id: BP8.2
+        kind: recommendation
+        source_status: verified
+        source_anchor: S4, PDF p. 11, retention policy, bullet 2
+        text: Describe the conditions under which metadata or files are removed.
+        operational_interpretation: Check declared removal conditions, including any explicit no-removal policy.
+        applicability_guidance: Applies to all resources. Confirm any exclusion with the member; missing evidence
+          is unknown.
+      - id: BP8.3
+        kind: recommendation
+        source_status: verified
+        source_anchor: S4, PDF p. 11, retention policy, bullet 3
+        text: Identify who has responsibility and authority to remove information.
+        operational_interpretation: Check roles and permissions at policy level.
+        applicability_guidance: Applies to all resources. Confirm any exclusion with the member; missing evidence
+          is unknown.
+      - id: BP8.4
+        kind: recommendation
+        source_status: verified
+        source_anchor: S4, PDF p. 11, retention policy, bullet 4
+        text: Describe procedures for requesting removal of metadata or files.
+        operational_interpretation: Check published procedures or a clearly stated refusal policy; do not initiate
+          removal.
+        applicability_guidance: Applies to all resources. Confirm any exclusion with the member; missing evidence
+          is unknown.
+      - id: BP8.5
+        kind: recommendation
+        source_status: verified
+        source_anchor: S4, PDF p. 12, retention policy, paragraph beginning The policy
+        text: Address identifier resolvability, retention, and non-reuse.
+        operational_interpretation: Check the stated treatment of persistent identifiers after removal.
+        applicability_guidance: Applies when persistent identifiers are used.
+      - id: BP8.6
+        kind: recommendation
+        source_status: verified
+        source_anchor: S4, PDF p. 12, retention policy, paragraph beginning The policy
+        text: Set retention expectations in the context of the organization and its funding.
+        operational_interpretation: Look for a contextual rationale or limits; do not prescribe a numeric duration
+          or invent funding commitments.
+        applicability_guidance: Applies to all resources. Confirm any exclusion with the member; missing evidence
+          is unknown.
+      - id: BP8.7
+        kind: recommendation
+        source_status: verified
+        source_anchor: S4, PDF p. 12, retention policy, paragraph beginning The policy
+        text: State who can edit metadata or delete records and files, and how consistency is preserved.
+        operational_interpretation: Check documented edit and deletion controls relevant to the resource functions.
+        applicability_guidance: Applies to all resources. Confirm any exclusion with the member; missing evidence
+          is unknown.
+      - id: BP8.8
+        kind: recommendation
+        source_status: verified
+        source_anchor: S4, PDF p. 12, retention policy, paragraph beginning The policy
+        text: Document taking data offline, archiving it, and possible retrieval.
+        operational_interpretation: Check the lifecycle process and retrieval limits; do not require an offline
+          archive if no such workflow exists.
+        applicability_guidance: Applies when offline or archival workflows exist; confirm exclusions.
   - id: BP9
     title: Disclose your end-of-life policy
-    title_status: unverified_secondary_source
+    title_status: verified_scorecard
     criteria:
-      - {id: BP9.1, kind: expectation, source_status: unresolved, source_anchor: null, text: "Placeholder: detailed baseline expectations not yet transcribed from the verified source.", operational_interpretation: null, applicability_guidance: "Define resource-function applicability once the source criteria are verified."}
+      - id: BP9.1
+        kind: recommendation
+        source_status: verified
+        source_anchor: S4, PDF p. 12, end-of-life policy, bullet 1
+        text: Describe circumstances in which the resource might end its services.
+        operational_interpretation: Check a published closure contingency; do not invent triggers.
+        applicability_guidance: Applies to all resources. Confirm any exclusion with the member; missing evidence
+          is unknown.
+      - id: BP9.2
+        kind: recommendation
+        source_status: verified
+        source_anchor: S4, PDF p. 12, end-of-life policy, bullet 2
+        text: Describe the consequences of closure.
+        operational_interpretation: Look for expected availability, access conditions, and restrictions after
+          closure, without requiring uninterrupted service.
+        applicability_guidance: Applies to all resources. Confirm any exclusion with the member; missing evidence
+          is unknown.
+      - id: BP9.3
+        kind: recommendation
+        source_status: verified
+        source_anchor: S4, PDF p. 12, end-of-life policy, bullet 3
+        text: State what happens to metadata and software artifacts on closure.
+        operational_interpretation: Cover metadata and, where hosted, software artifacts; do not infer preservation
+          from a general sustainability statement.
+        applicability_guidance: Applies to all resources. Confirm any exclusion with the member; missing evidence
+          is unknown.
+      - id: BP9.4
+        kind: recommendation
+        source_status: verified
+        source_anchor: S4, PDF p. 12, end-of-life policy, bullet 4
+        text: Identify a migration destination when long-term preservation is expected.
+        operational_interpretation: Check a named destination or documented arrangement; no particular repository
+          is required.
+        applicability_guidance: Conditional on expected long-term preservation by migration. Record uncertainty
+          rather than inventing a successor.
+      - id: BP9.5
+        kind: recommendation
+        source_status: verified
+        source_anchor: S4, PDF p. 12, end-of-life policy, bullet 5
+        text: Explain how a migration will be funded.
+        operational_interpretation: Check the stated funding arrangement or its limits; assess disclosure,
+          not financial viability.
+        applicability_guidance: Applies when migration is planned; confirm exclusion if no migration is intended.

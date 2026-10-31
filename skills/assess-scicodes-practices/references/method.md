@@ -1,6 +1,6 @@
 # Method
 
-Evidence collection, verification, prioritization, output handling, and calibration. Criteria and tier rules live only in [rubric.yaml](rubric.yaml).
+Evidence collection, verification, prioritization, output handling, and calibration. Criteria and score rules live only in [rubric.yaml](rubric.yaml).
 
 ## Resolve resource and scope
 
@@ -19,6 +19,10 @@ Check, in roughly this order, and stop when the question is answered or the boun
 5. Institutional policies that are linked from the member site, counted only where it is clear they apply to this resource.
 
 Record material access limitations (login walls, robots exclusions, timeouts, blocked hosts) and each unsuccessful search. Do not crawl exhaustively. Sample records only when a specific question needs record-level evidence; document how they were selected and the limits, with no universal sample size.
+
+## Using the published baseline
+
+Read `criterion_policy` and each criterion's interpretation and applicability guidance in the rubric. The supplied 2022 paper is the pinned edition; page anchors refer to its printed PDF pagination. The paper is non-prescriptive: named resources and technologies illustrate approaches, rather than imposing specific tools, licenses, or preservation arrangements. Its policy-disclosure criteria generally assess what the resource states, not whether the promised behavior has been independently demonstrated. Keep that distinction in the report.
 
 ## Evidence distinctions
 
@@ -75,4 +79,4 @@ Write `assessment.json`, `report.md`, and `checklist.md` to the user's output di
 6. Use human adjudication to refine the relevant rubric or method text.
 7. Record rubric changes separately from real member improvements.
 
-No real member audits are part of repository initialization.
+Repository fixtures and automated tests use fictional resources only.

@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://example.org/schemas/scicodes-assessment.schema.json",
   "title": "SciCodes practices assessment (member-review draft)",
-  "description": "Structure only. Tier derivation, criterion coverage, and cross-references are checked by scripts/validate.py against references/rubric.yaml. Passing validation does not establish that findings are correct.",
+  "description": "Structure only. Score derivation, criterion coverage, and cross-references are checked by scripts/validate.py against references/rubric.yaml. Passing validation does not establish that findings are correct.",
   "type": "object",
   "required": ["member", "resource_functions", "audit_date", "access_limitations", "baseline", "skill_version", "rubric_version", "model", "review", "evidence", "findings", "practice_results", "actions", "verification"],
   "additionalProperties": false,
@@ -112,7 +112,7 @@
         "additionalProperties": false,
         "properties": {
           "practice_id": {"type": "string"},
-          "result": {"enum": ["tier_0", "tier_1", "tier_2", "undetermined", "not_applicable", "invalid"]},
+          "result": {"enum": ["score_0", "score_1", "score_2", "score_3", "score_4", "undetermined", "not_applicable", "invalid"]},
           "counts": {
             "type": "object",
             "required": ["met", "unmet", "unknown", "not_applicable"],

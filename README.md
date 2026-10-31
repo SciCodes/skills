@@ -6,7 +6,9 @@ Agent skills for SciCodes member support.
 
 Helps research software registries and repositories assess adoption of published SciCodes best practices and produce an evidence-based report, an adoption checklist, and a structured JSON assessment (all member-review drafts). It is not a certification or ranking system, and it does not implement changes.
 
-**Status: experimental.** The rubric is an assessment interpretation pending SciCodes review. Its detailed criteria are currently an unresolved skeleton because the primary sources could not be accessed when the repository was initialized (see `skills/assess-scicodes-practices/references/rubric.yaml`). Until they are filled in with verified, anchored criteria, assessments report criteria as `unknown`, and no practice receives a definitive tier.
+**Status: experimental.** Rubric `0.1.0-draft` contains 52 source-backed recommendations across nine practices, paraphrased from Garijo et al. (2022), *Nine best practices for research software registries and repositories*, PeerJ Computer Science 8:e1023. Each criterion has a PDF page/section anchor, an assessor interpretation, and applicability guidance. Four optional enhancements remain outside baseline counts. Criterion grouping and applicability remain assessment interpretations pending SciCodes review; this is not certification.
+
+New assessments use the supplied tracking scorecard’s 0–4 scale plus N/A, with `undetermined` for missing evidence or unresolved criteria. The historical crosswalk verifies the headings and records comparison limits from the supplied ODS export.
 
 ### Invocation
 
@@ -32,16 +34,17 @@ make check      # lint + validate (default local and CI check)
 make eval       # optional; needs a model (see scripts/eval.py), may incur cost
 ```
 
-`make validate` checks skill frontmatter and reference paths, rubric and schema validity, fixture validation, and the tier boundary tests. The fixture in `tests/fixtures/` is fictional and uses reserved domains.
+`make validate` checks skill frontmatter and reference paths, rubric and schema validity, fixture validation, and the score boundary tests. The fixture in `tests/fixtures/` is fictional and uses reserved domains.
 
-`make eval` supplies the skill, rubric, method, schema, and fixed fictional evidence to a model wrapper over stdin. It checks JSON output only; it does not test live browsing or report and checklist generation. A completed source-backed rubric and an end-to-end assessment with human review are still needed before claiming that URL-to-assessment behavior is validated.
+`make eval` supplies the skill, rubric, method, schema, and fixed fictional evidence to a model wrapper over stdin. It checks JSON output only; it does not test live browsing or report and checklist generation. An end-to-end assessment with human review is still needed before claiming that URL-to-assessment behavior is validated.
 
 ## Sources and licensing
 
-Original contributions are under the Apache License 2.0 (the existing `LICENSE`). Source materials are referenced, not copied or relicensed:
+Original contributions are under the Apache License 2.0 (the existing `LICENSE`). The selected paper is CC-BY-4.0. The rubric attributes and paraphrases its recommendations; no paper PDF or member scorecard rows are bundled. Source materials retain their own licenses:
 
 - SciCodes overview: <https://scicodes.net/best-practices-for-software-registries-and-repositories/>
-- Detailed guide: <https://arxiv.org/abs/2012.13117>
+- Selected published baseline: Garijo et al. (2022), <https://doi.org/10.7717/peerj-cs.1023> (user-supplied PDF read)
+- Earlier concise guide: <https://arxiv.org/abs/2012.13117> (not read)
 - 2023 self-assessment: <https://docs.google.com/spreadsheets/d/1Ud2qsplv_17AjXKox7azES-L7LTqzj5rXaSpEaFAIjw/edit?gid=0#gid=0>
 
-None of these three were readable during initialization; see `references/rubric.yaml` and `references/assessment-2023-crosswalk.md`.
+The supplied `peerj-cs-08-1023.pdf` has been read and pinned by publication date, DOI, and SHA-256 in the rubric. Online successors and the overview have not been verified. A user-supplied `2023-9 Best Practices Self Assessment.ods` export has now been read; its provenance and historical comparison limits are recorded in `skills/assess-scicodes-practices/references/assessment-2023-crosswalk.md`. The live spreadsheet has not been verified against the export.

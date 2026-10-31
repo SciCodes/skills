@@ -20,7 +20,7 @@ If resource functions are not supplied, infer them from evidence (suggested tags
 1. Load [rubric.yaml](references/rubric.yaml) before making any assessment judgment. Pin the baseline it names; if a requested baseline conflicts, defer dependent judgments and explain the mismatch. If a newer publication exists, give a notice rather than switching silently.
 2. Load [method.md](references/method.md) before collecting evidence. Resolve the resource and assessment scope from the supplied URL, then follow its bounded search, evidence distinctions, and restricted-evidence handling.
 3. Record every rubric criterion exactly once, with outcome met, unmet, unknown, or not_applicable. Missing evidence is `unknown`, never failure or success. Derive practice results only with the ordered `decision_rules` in the rubric, and show criterion counts and evidence completeness with each result.
-4. If comparing with 2023 or another prior assessment, load [assessment-2023-crosswalk.md](references/assessment-2023-crosswalk.md). A historical "yes" does not establish a current tier.
+4. If comparing with 2023 or another prior assessment, load [assessment-2023-crosswalk.md](references/assessment-2023-crosswalk.md). A historical "yes" does not establish a current score.
 5. Recheck findings as [method.md](references/method.md) requires.
 6. Load the templates [report.md](assets/report.md) and [checklist.md](assets/checklist.md) and the schema [assessment.schema.json](assets/assessment.schema.json) when generating outputs. Write all three drafts as method.md describes, or return them inline with clear delimiters if no filesystem access exists.
 7. If this repository's `scripts/validate.py` is available, run it on the JSON output. Passing checks structure only, not correctness of findings.
@@ -32,5 +32,5 @@ If resource functions are not supplied, infer them from evidence (suggested tags
 - Respect robots directives and rate limits; do not crawl exhaustively.
 - If browsing is unavailable, say current public evidence could not be verified, assess only supplied evidence, and never claim to have inspected live pages.
 - Never invent retention periods, rights, preservation guarantees, funding commitments, successor arrangements, quotations, or anchors. Generated policy text is unapproved and marked as such.
-- Do not add overall member tiers, rankings, adoption percentages, or advanced tiers. Keep optional enhancements outside baseline results.
+- Do not add overall member scores, rankings, or aggregate adoption percentages. Keep optional enhancements outside baseline results.
 - Outputs are drafts for member review before any publication or aggregation.

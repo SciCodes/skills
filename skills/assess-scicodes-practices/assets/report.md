@@ -15,7 +15,7 @@
 |---|---|---|---|
 | {{practice_id_title}} | {{result}} | {{counts}} | {{complete_or_incomplete}} |
 
-Show counts next to every result, including exclusions. Example wording: "Tier 1; evidence incomplete: 6 met, 2 unmet, 1 unknown."
+Show counts next to every result, including exclusions. Use scorecard labels 0–4 and N/A for definitive results, and "undetermined" when evidence is incomplete. Example wording: "Undetermined; 6 met, 2 unmet, 1 unknown."
 
 ## Next steps
 

@@ -55,13 +55,14 @@ class Evaluation(unittest.TestCase):
         rubric = evaluation.v.load_rubric()
         rubric["baseline"].update(selected="fictional-guide", version="fictional-v1")
         fixture["baseline"].update(id="fictional-guide", version="fictional-v1", status="pinned")
-        criterion = next(p for p in rubric["practices"] if p["id"] == "BP1")["criteria"][0]
-        criterion.update(source_status="verified", source_anchor="https://example.org/fictional-guide#scope")
-        finding = next(f for f in fixture["findings"] if f["criterion_id"] == criterion["id"])
-        finding.update(outcome="met", evidence_ids=["E1"])
-        finding.pop("reason")
+        criteria = next(p for p in rubric["practices"] if p["id"] == "BP1")["criteria"]
+        for criterion in criteria:
+            criterion.update(source_status="verified", source_anchor="https://example.org/fictional-guide#scope")
+            finding = next(f for f in fixture["findings"] if f["criterion_id"] == criterion["id"])
+            finding.update(outcome="met", evidence_ids=["E1"])
+            finding.pop("reason")
         result = next(r for r in fixture["practice_results"] if r["practice_id"] == "BP1")
-        result.update(result="tier_2", counts={"met": 1, "unmet": 0, "unknown": 0, "not_applicable": 0},
+        result.update(result="score_4", counts={"met": len(criteria), "unmet": 0, "unknown": 0, "not_applicable": 0},
                       evidence_complete=True)
         with patch.object(evaluation.v, "load_rubric", return_value=rubric):
             status, _ = self.run_wrapper(fixture)
@@ -69,10 +70,13 @@ class Evaluation(unittest.TestCase):
 
     def test_unresolved_criterion_still_rejects_definitive_findings(self):
         fixture = json.loads((ROOT / "tests/fixtures/fictional-assessment.json").read_text())
+        rubric = evaluation.v.load_rubric()
+        next(p for p in rubric["practices"] if p["id"] == "BP1")["criteria"][0]["source_status"] = "unresolved"
         finding = next(f for f in fixture["findings"] if f["criterion_id"] == "BP1.1")
         finding.update(outcome="met", evidence_ids=["E1"])
         finding.pop("reason")
-        status, _ = self.run_wrapper(fixture)
+        with patch.object(evaluation.v, "load_rubric", return_value=rubric):
+            status, _ = self.run_wrapper(fixture)
         self.assertEqual(status, 1)
 
 

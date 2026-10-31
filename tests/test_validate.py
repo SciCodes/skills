@@ -1,4 +1,4 @@
-"""Tier boundary, coverage, and fixture tests. Run: python -m unittest discover tests"""
+"""Score boundary, coverage, and fixture tests. Run: python -m unittest discover tests"""
 import contextlib
 import copy
 import io
@@ -57,17 +57,24 @@ def make(outcomes):
     return a, rubric
 
 
-class TierBoundaries(unittest.TestCase):
+class ScoreBoundaries(unittest.TestCase):
     CASES = [
-        (["met", "met", "unmet", "unknown"], "tier_1", False),
+        (["met"] + ["unmet"] * 4, "score_1", True),  # below one quarter
+        (["met"] + ["unmet"] * 3, "score_1", True),  # exactly one quarter
+        (["met"] + ["unmet"] * 2, "score_2", True),  # above one quarter
+        (["met", "met", "unmet"], "score_3", True),  # above one half
+        (["met"] * 4, "score_4", True),
+        (["not_applicable", "met"] + ["unmet"] * 3, "score_1", True),
+        (["not_applicable", "unknown"], "undetermined", False),
+        (["met", "met", "unmet", "unknown"], "undetermined", False),
         (["met", "met", "unknown"], "undetermined", False),
         (["unmet", "unmet", "unknown"], "undetermined", False),
-        (["not_applicable", "met", "met"], "tier_2", True),
-        (["unmet", "unmet", "unmet"], "tier_0", True),
+        (["not_applicable", "met", "met"], "score_4", True),
+        (["unmet", "unmet", "unmet"], "score_0", True),
         (["not_applicable", "not_applicable"], "not_applicable", True),
-        (["unknown", "met", "met"], "undetermined", False),  # unconfirmed applicability blocks Tier 2
-        (["unknown", "unmet", "unmet"], "undetermined", False),  # ... and Tier 0
-        (["met", "unmet"], "tier_1", True),
+        (["unknown", "met", "met"], "undetermined", False),  # unconfirmed applicability blocks Score 4
+        (["unknown", "unmet", "unmet"], "undetermined", False),  # ... and Score 0
+        (["met", "unmet"], "score_2", True),
     ]
 
     def test_derivation_and_validation(self):
@@ -82,10 +89,19 @@ class TierBoundaries(unittest.TestCase):
         self.assertEqual(v.derive_result(v.count_outcomes([]), RULES), "invalid")
         self.assertEqual(v.derive_result(v.count_outcomes(["met"]), RULES, structure_valid=False), "invalid")
 
+    def test_fraction_condition_cannot_match_without_applicable_evidence(self):
+        rules = [
+            {"id": "fraction", "result": "score_1", "when": {"max_met_fraction": 0.25}},
+            {"id": "fallback", "result": "invalid", "when": {"otherwise": True}},
+        ]
+        for outcomes in ([], ["not_applicable"], ["unknown"]):
+            with self.subTest(outcomes=outcomes):
+                self.assertEqual(v.derive_result(v.count_outcomes(outcomes), rules), "invalid")
+
     def test_wrong_results_are_rejected(self):
         a, rubric = make(["met", "unmet"])
-        a["practice_results"][0]["result"] = "tier_2"
-        self.assertTrue(any("derived tier_1" in e for e in v.validate_assessment(a, rubric)))
+        a["practice_results"][0]["result"] = "score_4"
+        self.assertTrue(any("derived score_2" in e for e in v.validate_assessment(a, rubric)))
         a, rubric = make(["met", "unmet", "unknown"])
         a["practice_results"][0]["counts"]["unknown"] = 0
         self.assertTrue(any("reported counts" in e for e in v.validate_assessment(a, rubric)))
@@ -153,11 +169,26 @@ class Repository(unittest.TestCase):
     def test_repository_checks_pass(self):
         self.assertEqual(v.check_repository(), [])
 
-    def test_real_rubric_unresolved_criteria_cannot_be_met(self):
+    def test_unresolved_criteria_cannot_be_met(self):
+        rubric = copy.deepcopy(RUBRIC)
+        next(p for p in rubric["practices"] if p["id"] == "BP1")["criteria"][0]["source_status"] = "unresolved"
         a = json.loads(FIXTURE.read_text())
         a["findings"][0].update(outcome="met", evidence_ids=["E1"])
         a["findings"][0].pop("reason")
-        self.assertTrue(any("unresolved criterion" in e for e in v.validate_assessment(a, RUBRIC)))
+        self.assertTrue(any("unresolved criterion" in e for e in v.validate_assessment(a, rubric)))
+
+    def test_published_rubric_supports_evidenced_assessments(self):
+        for outcome, score in (("met", "score_4"), ("unmet", "score_0")):
+            assessment = json.loads(FIXTURE.read_text())
+            for finding in assessment["findings"]:
+                finding.update(outcome=outcome, evidence_ids=["E1"])
+                finding.pop("reason")
+            for result in assessment["practice_results"]:
+                total = result["counts"]["unknown"]
+                result["counts"] = v.count_outcomes([outcome] * total)
+                result.update(result=score, evidence_complete=True)
+            with self.subTest(outcome=outcome):
+                self.assertEqual(v.validate_assessment(assessment, RUBRIC), [])
 
 
 class Configuration(unittest.TestCase):
@@ -241,6 +272,8 @@ class Configuration(unittest.TestCase):
                                                       {"met": -1}, {"met": 1.5}, {"other": 1})]
         conditions += [{"equals_total": value} for value in
                        (None, "met", {}, [], ["met", "met"], ["other"], [[]])]
+        conditions += [{"max_met_fraction": value} for value in
+                       (None, True, "0.25", -0.1, 1.1, {}, float("nan"), float("inf"))]
         for condition in conditions:
             rubric = copy.deepcopy(RUBRIC)
             rubric["decision_rules"][1]["when"] = condition
@@ -258,7 +291,7 @@ class Configuration(unittest.TestCase):
     def test_final_fallback_is_executed(self):
         rubric = copy.deepcopy(RUBRIC)
         rubric["decision_rules"] = [
-            {"id": "match", "result": "tier_2", "when": {"min": {"met": 2}}},
+            {"id": "match", "result": "score_4", "when": {"min": {"met": 2}}},
             {"id": "fallback", "result": "undetermined", "when": {"otherwise": True}},
         ]
         self.assertEqual(v.check_rubric(rubric), [])
@@ -298,11 +331,14 @@ class Provenance(unittest.TestCase):
         self.assertTrue(any("rubric_version" in e for e in v.validate_assessment(assessment, RUBRIC)))
 
     def test_unresolved_baseline_cannot_claim_a_pin_or_another_version(self):
+        rubric = copy.deepcopy(RUBRIC)
+        rubric["baseline"].update(selected=None, version="unresolved")
         for change in ({"status": "pinned"}, {"version": "999"}):
             assessment = json.loads(FIXTURE.read_text())
+            assessment["baseline"].update(status="unresolved", version="unresolved")
             assessment["baseline"].update(change)
             with self.subTest(change=change):
-                self.assertTrue(any("baseline" in e for e in v.validate_assessment(assessment, RUBRIC)))
+                self.assertTrue(any("baseline" in e for e in v.validate_assessment(assessment, rubric)))
 
     def test_pinned_baseline_identity_and_version_must_match(self):
         rubric = copy.deepcopy(RUBRIC)
