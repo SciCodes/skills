@@ -22,9 +22,7 @@ Assumptions: the agent can browse public web pages (otherwise it assesses only e
 
 ### Installation
 
-
 [OMF Skill installation instructions](https://github.com/openmodelingfoundation/skills/blob/main/docs/install.md).
-
 
 #### npx
 
@@ -41,16 +39,19 @@ gh skill install SciCodes/skills --all
 
 **Recommended: project-specific installation.** Copy the folder into a project's `.agents/skills/` and avoid global installation. Global skills are visible in every project and might steer unrelated tasks toward this assessment's way of organizing information. For multiple assessments, create a dedicated shell project that manages a locally versioned skill installation and tracks results and feedback.
 
-
 ### Development
 
 ```text
 make setup      # create .venv and install development dependencies
-make check      # lint + validate (default local and CI check)
+make lint       # apply safe Python and Markdown fixes, format Python, then check
+make lint-check # check lint and formatting without modifying files
+make check      # lint-check + validate (default local and CI check)
 make eval       # optional; needs a model (see scripts/eval.py), may incur cost
 ```
 
 Make targets use `.venv` directly and run setup automatically when needed; activation is unnecessary. Python 3 with `venv` support is required. Set `PYTHON` to choose the interpreter or `VENV` to choose a different environment directory.
+
+`make lint` applies the fixes supported by Ruff and PyMarkdown, then reports remaining issues. YAML linting and issues without an automatic fix require manual edits.
 
 `make validate` checks skill frontmatter and reference paths, rubric and schema validity, fixture validation, and the score boundary tests. The fixture in `tests/fixtures/` is fictional and uses reserved domains.
 

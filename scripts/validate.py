@@ -9,6 +9,7 @@ Checks structure and consistency only. Passing does not establish that the
 underlying findings are correct. Score decisions come from the ordered rules in
 rubric.yaml; this module only interprets them.
 """
+
 import json
 import re
 import sys
@@ -24,7 +25,14 @@ SKILL = ROOT / "skills" / "assess-scicodes-practices"
 RUBRIC_PATH = SKILL / "references" / "rubric.yaml"
 SCHEMA_PATH = SKILL / "assets" / "assessment.schema.json"
 OUTCOMES = ("met", "unmet", "unknown", "not_applicable")
-CONDITION_KEYS = {"exact", "min", "equals_total", "structure_valid", "otherwise", "max_met_fraction"}
+CONDITION_KEYS = {
+    "exact",
+    "min",
+    "equals_total",
+    "structure_valid",
+    "otherwise",
+    "max_met_fraction",
+}
 
 
 def load_rubric(path=RUBRIC_PATH):
@@ -64,7 +72,9 @@ def check_rubric(rubric):
                 errors.append(f"practice {pid}: criterion must be an object")
                 continue
             cid = crit.get("id")
-            if not isinstance(cid, str) or not re.fullmatch(re.escape(pid) + r"\.[0-9]+", cid):
+            if not isinstance(cid, str) or not re.fullmatch(
+                re.escape(pid) + r"\.[0-9]+", cid
+            ):
                 errors.append(f"criterion id {cid!r} does not belong to {pid}")
                 continue
             if cid in seen:
@@ -72,7 +82,9 @@ def check_rubric(rubric):
             seen.add(cid)
             if crit.get("source_status") not in ("verified", "unresolved"):
                 errors.append(f"criterion {cid} has invalid source_status")
-            if crit.get("source_status") == "verified" and not crit.get("source_anchor"):
+            if crit.get("source_status") == "verified" and not crit.get(
+                "source_anchor"
+            ):
                 errors.append(f"verified criterion {cid} needs a source_anchor")
     if len(practice_ids) != 9 or set(practice_ids) != {f"BP{i}" for i in range(1, 10)}:
         errors.append("practices must contain exactly BP1-BP9, each once")
@@ -96,9 +108,17 @@ def check_rubric(rubric):
             errors.append(f"{label} needs nonempty supported conditions")
             continue
         if "otherwise" in when:
-            if len(when) != 1 or when["otherwise"] is not True or index != len(rules) - 1:
-                errors.append(f"{label}: otherwise must be standalone true on the final rule only")
-        if index == len(rules) - 1 and (set(when) != {"otherwise"} or when.get("otherwise") is not True):
+            if (
+                len(when) != 1
+                or when["otherwise"] is not True
+                or index != len(rules) - 1
+            ):
+                errors.append(
+                    f"{label}: otherwise must be standalone true on the final rule only"
+                )
+        if index == len(rules) - 1 and (
+            set(when) != {"otherwise"} or when.get("otherwise") is not True
+        ):
             errors.append("final decision rule must be standalone otherwise: true")
         if "structure_valid" in when and type(when["structure_valid"]) is not bool:
             errors.append(f"{label} has invalid structure_valid condition")
@@ -118,9 +138,12 @@ def check_rubric(rubric):
                     errors.append(f"{label} has invalid {key} condition")
         if "equals_total" in when:
             outcomes = when["equals_total"]
-            if (not isinstance(outcomes, list) or not outcomes
-                    or any(o not in OUTCOMES for o in outcomes)
-                    or len(outcomes) != len(set(outcomes))):
+            if (
+                not isinstance(outcomes, list)
+                or not outcomes
+                or any(o not in OUTCOMES for o in outcomes)
+                or len(outcomes) != len(set(outcomes))
+            ):
                 errors.append(f"{label} needs unique valid outcomes in equals_total")
     return errors
 
@@ -136,9 +159,12 @@ def _assessment_enum(schema, collection, field):
 
 
 def _vocabulary(values):
-    if (not isinstance(values, list) or not values
-            or any(not isinstance(value, str) for value in values)
-            or len(values) != len(set(values))):
+    if (
+        not isinstance(values, list)
+        or not values
+        or any(not isinstance(value, str) for value in values)
+        or len(values) != len(set(values))
+    ):
         return None
     return set(values)
 
@@ -153,23 +179,49 @@ def check_configuration(rubric, schema):
     if errors:
         return errors
     vocabularies = (
-        ("outcomes", rubric.get("outcomes"), _assessment_enum(schema, "findings", "outcome")),
-        ("unknown_reasons", rubric.get("unknown_reasons"), _assessment_enum(schema, "findings", "reason")),
-        ("results", list(rubric["results"]), _assessment_enum(schema, "practice_results", "result")),
+        (
+            "outcomes",
+            rubric.get("outcomes"),
+            _assessment_enum(schema, "findings", "outcome"),
+        ),
+        (
+            "unknown_reasons",
+            rubric.get("unknown_reasons"),
+            _assessment_enum(schema, "findings", "reason"),
+        ),
+        (
+            "results",
+            list(rubric["results"]),
+            _assessment_enum(schema, "practice_results", "result"),
+        ),
     )
     for name, declared, allowed in vocabularies:
-        if _vocabulary(declared) is None or _vocabulary(declared) != _vocabulary(allowed):
+        if _vocabulary(declared) is None or _vocabulary(declared) != _vocabulary(
+            allowed
+        ):
             errors.append(f"configuration: rubric {name} must match the schema enum")
     if _vocabulary(rubric.get("outcomes")) != set(OUTCOMES):
-        errors.append("configuration: outcomes must match interpreter-supported outcomes")
+        errors.append(
+            "configuration: outcomes must match interpreter-supported outcomes"
+        )
     baseline = rubric.get("baseline")
-    if (not isinstance(baseline, dict)
-            or not isinstance(baseline.get("version"), str) or not baseline["version"]
-            or "selected" not in baseline
-            or (baseline["selected"] is not None and (
-                not isinstance(baseline["selected"], str) or not baseline["selected"]))):
-        errors.append("configuration: baseline needs a version and selected source ID or null")
-    if not isinstance(rubric.get("rubric_version"), str) or not rubric["rubric_version"]:
+    if (
+        not isinstance(baseline, dict)
+        or not isinstance(baseline.get("version"), str)
+        or not baseline["version"]
+        or "selected" not in baseline
+        or (
+            baseline["selected"] is not None
+            and (not isinstance(baseline["selected"], str) or not baseline["selected"])
+        )
+    ):
+        errors.append(
+            "configuration: baseline needs a version and selected source ID or null"
+        )
+    if (
+        not isinstance(rubric.get("rubric_version"), str)
+        or not rubric["rubric_version"]
+    ):
         errors.append("configuration: rubric_version must be a nonempty string")
     return errors
 
@@ -197,7 +249,10 @@ def derive_result(counts, rules, structure_valid=True):
             continue
         if "min" in when and any(counts[o] < n for o, n in when["min"].items()):
             continue
-        if "equals_total" in when and sum(counts[o] for o in when["equals_total"]) != total:
+        if (
+            "equals_total" in when
+            and sum(counts[o] for o in when["equals_total"]) != total
+        ):
             continue
         if "max_met_fraction" in when:
             applicable = counts["met"] + counts["unmet"]
@@ -222,7 +277,9 @@ def validate_assessment(assessment, rubric, schema=None):
         return errors
     errors = [
         f"schema: {'/'.join(map(str, e.absolute_path))}: {e.message}"
-        for e in Draft202012Validator(schema, format_checker=FormatChecker()).iter_errors(assessment)
+        for e in Draft202012Validator(
+            schema, format_checker=FormatChecker()
+        ).iter_errors(assessment)
     ]
     if errors:
         return errors
@@ -251,13 +308,17 @@ def _check_provenance(assessment, rubric):
     selected = rubric["baseline"]["selected"]
     if baseline["status"] == "mismatch_deferred":
         if not baseline.get("note", "").strip():
-            errors.append("baseline mismatch_deferred requires a note explaining the mismatch")
+            errors.append(
+                "baseline mismatch_deferred requires a note explaining the mismatch"
+            )
         if any(f["outcome"] != "unknown" for f in assessment["findings"]):
             errors.append("baseline mismatch_deferred requires unknown findings")
     else:
         expected_status = "unresolved" if selected is None else "pinned"
         if baseline["status"] != expected_status:
-            errors.append(f"baseline status must be {expected_status} for the loaded rubric")
+            errors.append(
+                f"baseline status must be {expected_status} for the loaded rubric"
+            )
         if selected is not None and baseline["id"] != selected:
             errors.append("baseline id does not match the loaded rubric")
         if baseline["version"] != rubric["baseline"]["version"]:
@@ -301,23 +362,38 @@ def _check_evidence(assessment, crit_meta):
         for ref in refs:
             if ref not in evidence:
                 errors.append(f"{cid}: unknown evidence {ref}")
-        if f["outcome"] == "unknown" and f.get("reason") in (
-            "not_found_after_search", "applicability_unconfirmed"
-        ) and not f.get("member_confirmation_requested"):
-            errors.append(f"{cid}: {f['reason']} requires member_confirmation_requested")
-        if cid in crit_meta and crit_meta[cid]["source_status"] == "unresolved" and (
-            f["outcome"] != "unknown" or f.get("reason") != "baseline_unresolved"
+        if (
+            f["outcome"] == "unknown"
+            and f.get("reason")
+            in ("not_found_after_search", "applicability_unconfirmed")
+            and not f.get("member_confirmation_requested")
         ):
-            errors.append(f"{cid}: unresolved criterion must be unknown/baseline_unresolved")
+            errors.append(
+                f"{cid}: {f['reason']} requires member_confirmation_requested"
+            )
+        if (
+            cid in crit_meta
+            and crit_meta[cid]["source_status"] == "unresolved"
+            and (f["outcome"] != "unknown" or f.get("reason") != "baseline_unresolved")
+        ):
+            errors.append(
+                f"{cid}: unresolved criterion must be unknown/baseline_unresolved"
+            )
         known = [evidence[r] for r in refs if r in evidence]
-        if known and all(e["visibility"] == "restricted" for e in known) and (
-            f.get("basis_publicly_verifiable") is not False
+        if (
+            known
+            and all(e["visibility"] == "restricted" for e in known)
+            and (f.get("basis_publicly_verifiable") is not False)
         ):
-            errors.append(f"{cid}: restricted-only basis must set basis_publicly_verifiable false")
+            errors.append(
+                f"{cid}: restricted-only basis must set basis_publicly_verifiable false"
+            )
     if assessment["review"]["public_export_sanitized"]:
         for e in evidence.values():
             if e["visibility"] == "restricted" and "excerpt" in e:
-                errors.append(f"{e['id']}: restricted excerpt present in sanitized export")
+                errors.append(
+                    f"{e['id']}: restricted excerpt present in sanitized export"
+                )
 
     return errors
 
@@ -352,9 +428,13 @@ def _check_results(assessment, rubric, crit_to_practice, practice_ids):
         counts = count_outcomes(by_practice[r["practice_id"]])
         result = derive_result(counts, rubric["decision_rules"])
         if r["counts"] != counts:
-            errors.append(f"{r['practice_id']}: reported counts {r['counts']} != derived {counts}")
+            errors.append(
+                f"{r['practice_id']}: reported counts {r['counts']} != derived {counts}"
+            )
         if r["result"] != result:
-            errors.append(f"{r['practice_id']}: reported {r['result']} != derived {result}")
+            errors.append(
+                f"{r['practice_id']}: reported {r['result']} != derived {result}"
+            )
         if r["evidence_complete"] != (counts["unknown"] == 0):
             errors.append(f"{r['practice_id']}: evidence_complete is inconsistent")
     return errors
@@ -397,7 +477,10 @@ def check_repository():
         errors.append("no assessment fixtures found")
     for path in fixtures:
         with open(path, encoding="utf-8") as fh:
-            errors += [f"{path.name}: {e}" for e in validate_assessment(json.load(fh), rubric, schema)]
+            errors += [
+                f"{path.name}: {e}"
+                for e in validate_assessment(json.load(fh), rubric, schema)
+            ]
     return errors
 
 

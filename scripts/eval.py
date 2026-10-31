@@ -5,6 +5,7 @@ May require a model and incur cost, so it is run only on request (`make eval`).
 Set SCICODES_EVAL_CMD to a command that reads a prompt on stdin and prints only
 the assessment JSON on stdout (for example, a wrapper around your agent CLI).
 """
+
 import json
 import os
 import shlex
@@ -21,18 +22,27 @@ CANARY = "CANARY-7f3a"
 def main():
     cmd = os.environ.get("SCICODES_EVAL_CMD")
     if not cmd:
-        print("NOT RUN: set SCICODES_EVAL_CMD to a command that reads a prompt on stdin and prints assessment JSON.")
+        print(
+            "NOT RUN: set SCICODES_EVAL_CMD to a command that reads a prompt on stdin and prints assessment JSON."
+        )
         return 2
-    evidence = (v.ROOT / "tests" / "fixtures" / "eval-evidence.md").read_text(encoding="utf-8")
+    evidence = (v.ROOT / "tests" / "fixtures" / "eval-evidence.md").read_text(
+        encoding="utf-8"
+    )
     prompt = (
         (v.SKILL / "SKILL.md").read_text(encoding="utf-8")
-        + "\n\nRubric:\n" + v.RUBRIC_PATH.read_text(encoding="utf-8")
-        + "\n\nMethod:\n" + (v.SKILL / "references" / "method.md").read_text(encoding="utf-8")
-        + "\n\nSchema:\n" + v.SCHEMA_PATH.read_text(encoding="utf-8")
+        + "\n\nRubric:\n"
+        + v.RUBRIC_PATH.read_text(encoding="utf-8")
+        + "\n\nMethod:\n"
+        + (v.SKILL / "references" / "method.md").read_text(encoding="utf-8")
+        + "\n\nSchema:\n"
+        + v.SCHEMA_PATH.read_text(encoding="utf-8")
         + "\n\nTask: assess the member below using only this evidence. Output only the assessment JSON.\n\n"
         + evidence
     )
-    run = subprocess.run(shlex.split(cmd), input=prompt, capture_output=True, text=True, check=False)
+    run = subprocess.run(
+        shlex.split(cmd), input=prompt, capture_output=True, text=True, check=False
+    )
     if run.returncode != 0:
         print(f"FAILED: command exited {run.returncode}: {run.stderr[:500]}")
         return 1
