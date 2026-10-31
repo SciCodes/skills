@@ -1,6 +1,6 @@
 ---
 name: assess-scicodes-practices
-description: Experimental. Assess a research software registry or repository against the published SciCodes best practices, compare with previous self-assessments including the 2023 SciCodes self-assessment, and prepare an evidence-based report and adoption checklist. Use when a SciCodes member asks how well they follow the SciCodes practices or what to do next. Does not certify, rank, or score members, and does not implement changes.
+description: Experimental. Assess a research software registry or repository against the published SciCodes best practices, compare with previous self-assessments including the 2023 SciCodes self-assessment, and prepare an evidence-based report and adoption checklist. Use when a SciCodes member asks how well they follow the SciCodes practices or what to do next. Assigns per-practice scores, but does not certify, assign overall member scores or rankings, or implement changes.
 license: Apache-2.0
 ---
 
