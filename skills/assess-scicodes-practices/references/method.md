@@ -18,6 +18,8 @@ Check, in roughly this order, and stop when the question is answered or the boun
 4. Site search for each policy topic the rubric names.
 5. Institutional policies that are linked from the member site, counted only where it is clear they apply to this resource.
 
+Before marking a policy not found, explicitly inspect footer policy links and record each relevant target, access result, and applicability decision. A blocked site-search endpoint does not establish that linked policy pages are inaccessible. Keep a per-topic search log in the report, including unsuccessful searches and stopping reasons.
+
 Record material access limitations (login walls, robots exclusions, timeouts, blocked hosts) and each unsuccessful search. Do not crawl exhaustively. Sample records only when a specific question needs record-level evidence; document how they were selected and the limits, with no universal sample size.
 
 ## Using the published baseline
@@ -32,6 +34,8 @@ Label each evidence entry's `provenance` and keep these apart in findings:
 - internal evidence versus public disclosure;
 - maintainer assertion versus independently observed behavior;
 - repository code versus deployed behavior.
+
+Interface controls for entering names or selecting citation contributors do not by themselves establish authorship criteria. Preserve partial support in the finding note and name the missing parts of grouped criteria.
 
 A statement alone supports "published", not "implemented", unless the criterion only asks for publication. Assess privacy and conditions of use against the published expectations, not legal adequacy.
 
@@ -51,11 +55,13 @@ Mark restricted evidence `visibility: restricted`. Prefer a restricted reference
 Before finalizing, recheck:
 
 1. every negative (`unmet`), disputed, or consequential finding, prioritizing those that drive baseline-improvement actions or determine a practice result;
-2. a reproducible sample of the other evidence: sort the remaining evidence IDs ascending and take every third entry starting with the first (at least one).
+2. a reproducible sample of the other evidence: exclude IDs already checked under negative, disputed, or consequential selections; sort the remaining evidence IDs by their integer suffix (E2 before E10), then take indices 0, 3, 6, and so on. Omit a sample entry if no evidence remains. Compute this selection rather than estimating it; `scripts/validate.py` exposes `verification_sample(assessment)` and checks any recorded sample against it.
 
-Record the evidence IDs and what was checked in `verification`. Same-agent checking is not independent review; set `same_agent: true` accordingly.
+Record the evidence IDs and what was checked in `verification`. Never claim a source was rechecked merely because its ID belongs in the sample. Reopen the selected sources, record access failures honestly, and distinguish an attempted check from a completed check. Same-agent checking is not independent review; set `same_agent: true` accordingly.
 
 ## Prioritization and actions
+
+Keep each action within one practice; split cross-practice actions. `criterion_ids` may reference rubric optional-enhancement IDs only on `optional_enhancement` actions for their declared practice. Optional enhancements never enter baseline findings or score counts.
 
 Order actions by member capacity, dependencies, and the smallest useful change. Separate the checklist into evidence requests, baseline improvements, and optional enhancements. Each task names the concrete change, affected practice, suggested responsible role, and an observable completion check. Prefer existing infrastructure and established community templates. Mark generated policy text unapproved and list decisions for the responsible owner. Estimate effort only when useful: state units and assumptions, and separate hands-on work from approval delays.
 
@@ -65,6 +71,8 @@ When differences from an earlier assessment appear, classify each as: documented
 
 ## Outputs
 
+Record `run_provenance` for every new generation and subsequent review run. Separate coding-agent product/version from model identity. Record the exact skill commit or content digest, a non-sensitive run/session reference, and the source of the attribution. Use `unknown` for unavailable values; do not infer a model from an agent product, or an assessment author from a skill PR or Git commit author. Label recollections as `user_report` and explain uncertainty in `attribution_note`. Preserve original generation attribution when adding review provenance. Sanitize run references for public exports. Legacy assessments without this field remain structurally valid; do not fabricate their missing provenance.
+
 Copy `rubric_version` from the loaded rubric. When `baseline.selected` names a source ID, use that ID and `baseline.version` in the assessment with status `pinned`. When no source is selected, use status `unresolved` and copy the rubric's baseline version; the assessment ID is only a descriptive placeholder. If the requested baseline differs, use `mismatch_deferred`, record the requested ID and version and an explanatory note, and leave findings unknown until the baseline is resolved.
 
 Write `assessment.json`, `report.md`, and `checklist.md` to the user's output directory if given. Otherwise create `scicodes-assessments/<member-slug>-<YYYY-MM-DD>/` in the writable working area, outside the installed skill package. On collision append `-run2`, `-run3`, and so on; never overwrite silently. Report the resulting paths.
@@ -73,7 +81,7 @@ Write `assessment.json`, `report.md`, and `checklist.md` to the user's output di
 
 1. Choose one registry and one repository with differing resource functions, at least one represented in the 2023 assessment if feasible.
 2. Audit each twice in fresh sessions.
-3. Record model, skill version, rubric version, and material access differences.
+3. Record agent/version, model, exact skill revision, run reference, attribution basis, rubric version, and material access differences.
 4. Compare criterion decisions and supporting evidence.
 5. Separate rubric ambiguity from evidence-discovery variance.
 6. Use human adjudication to refine the relevant rubric or method text.

@@ -53,6 +53,10 @@ Make targets use `.venv` directly and run setup automatically when needed; activ
 
 `make lint` applies the fixes supported by Ruff and PyMarkdown, then reports remaining issues. YAML linting and issues without an automatic fix require manual edits.
 
+New runs record separate generation/review provenance: coding agent and version, model identifier, exact skill revision, a non-sensitive run reference, and the attribution source. Unknown values stay explicit; user recollections are not treated as runtime verification. The schema accepts legacy assessments without `run_provenance`.
+
+The validator checks reported verification samples using numeric evidence-ID order and accepts rubric optional-enhancement references only for optional actions in the matching practice. It cannot establish whether a claimed source recheck actually occurred.
+
 `make validate` checks skill frontmatter and reference paths, rubric and schema validity, fixture validation, and the score boundary tests. The fixture in `tests/fixtures/` is fictional and uses reserved domains.
 
 `make eval` supplies the skill, rubric, method, schema, and fixed fictional evidence to a model wrapper over stdin. It checks JSON output only; it does not test live browsing or report and checklist generation. An end-to-end assessment with human review is still needed before claiming that URL-to-assessment behavior is validated.

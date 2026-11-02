@@ -47,6 +47,26 @@
     "skill_version": {"type": "string"},
     "rubric_version": {"type": "string"},
     "model": {"type": "string", "description": "Model identity, or \"unknown\"."},
+    "run_provenance": {
+      "type": "array",
+      "description": "Generation and review runs. Optional for legacy assessments; record for new runs. Unknown identities must not be inferred from commit authors or product names.",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["role", "agent", "agent_version", "model", "skill_revision", "run_reference", "attribution_basis", "attribution_note"],
+        "additionalProperties": false,
+        "properties": {
+          "role": {"enum": ["generation", "review"]},
+          "agent": {"type": "string", "minLength": 1},
+          "agent_version": {"type": "string", "minLength": 1},
+          "model": {"type": "string", "minLength": 1},
+          "skill_revision": {"type": "string", "minLength": 1},
+          "run_reference": {"type": "string", "minLength": 1},
+          "attribution_basis": {"enum": ["runtime_metadata", "user_report", "unknown"]},
+          "attribution_note": {"type": "string", "minLength": 1}
+        }
+      }
+    },
     "review": {
       "type": "object",
       "required": ["audience", "status", "public_export_sanitized"],
@@ -140,7 +160,7 @@
           "id": {"type": "string", "pattern": "^A[0-9]+$"},
           "type": {"enum": ["evidence_request", "baseline_improvement", "optional_enhancement"]},
           "practice_id": {"type": "string"},
-          "criterion_ids": {"type": "array", "items": {"type": "string"}},
+          "criterion_ids": {"type": "array", "description": "Baseline criterion IDs, or rubric optional-enhancement IDs only for optional_enhancement actions; all must belong to practice_id.", "items": {"type": "string"}},
           "change": {"type": "string", "minLength": 1},
           "responsible_role": {"type": "string", "minLength": 1},
           "completion_check": {"type": "string", "minLength": 1},

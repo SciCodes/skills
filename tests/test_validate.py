@@ -218,6 +218,101 @@ class Coverage(unittest.TestCase):
         )
 
 
+class RunIntegrity(unittest.TestCase):
+    def test_optional_actions_respect_type_and_practice(self):
+        a, rubric = make(["unknown"])
+        action = {
+            "id": "A1",
+            "type": "optional_enhancement",
+            "practice_id": "BP5",
+            "criterion_ids": ["OPT1"],
+            "change": "Fictional crosswalk",
+            "responsible_role": "Maintainer",
+            "completion_check": "Example published",
+        }
+        a["actions"] = [action]
+        self.assertEqual(v.validate_assessment(a, rubric), [])
+        for changes in ({"type": "baseline_improvement"}, {"practice_id": "BP6"}):
+            changed = copy.deepcopy(a)
+            changed["actions"][0].update(changes)
+            self.assertTrue(
+                any(
+                    "criterion OPT1" in e
+                    for e in v.validate_assessment(changed, rubric)
+                )
+            )
+        a["findings"][0]["criterion_id"] = "OPT1"
+        self.assertTrue(
+            any(
+                "unrecognized criterion OPT1" in e
+                for e in v.validate_assessment(a, rubric)
+            )
+        )
+
+    def test_numeric_sample_excludes_prior_checks(self):
+        a, rubric = make(["unknown"])
+        template = a["evidence"][0]
+        a["evidence"] = [dict(template, id=f"E{i}") for i in range(1, 18)]
+        a["verification"] = [
+            {
+                "evidence_ids": ["E1", "E6", "E7", "E9", "E15"],
+                "selection": "consequential",
+                "checked": "Fictional check",
+                "same_agent": True,
+            }
+        ]
+        self.assertEqual(v.verification_sample(a), ["E2", "E5", "E11", "E14"])
+        a["verification"].append(
+            {
+                "evidence_ids": ["E2", "E5", "E11", "E14"],
+                "selection": "sample",
+                "checked": "Fictional check",
+                "same_agent": True,
+            }
+        )
+        self.assertEqual(v.validate_assessment(a, rubric), [])
+        for ids in (
+            ["E2", "E5", "E8", "E13", "E17"],
+            ["E2"],
+            ["E2", "E5", "E11", "E14", "E14"],
+        ):
+            a["verification"][-1]["evidence_ids"] = ids
+            self.assertTrue(
+                any(
+                    "sample must contain" in e for e in v.validate_assessment(a, rubric)
+                )
+            )
+        a["verification"] = [
+            {
+                "evidence_ids": [e["id"] for e in a["evidence"]],
+                "selection": "consequential",
+                "checked": "Fictional check",
+                "same_agent": True,
+            }
+        ]
+        self.assertEqual(v.verification_sample(a), [])
+        self.assertEqual(v.validate_assessment(a, rubric), [])
+
+    def test_provenance_and_legacy_compatibility(self):
+        a, rubric = make(["unknown"])
+        self.assertEqual(v.validate_assessment(a, rubric), [])
+        a["run_provenance"] = [
+            {
+                "role": "generation",
+                "agent": "Fictional agent",
+                "agent_version": "unknown",
+                "model": "unknown",
+                "skill_revision": "unknown",
+                "run_reference": "unknown",
+                "attribution_basis": "user_report",
+                "attribution_note": "Fictional recollection; unverified",
+            }
+        ]
+        self.assertEqual(v.validate_assessment(a, rubric), [])
+        del a["run_provenance"][0]["attribution_basis"]
+        self.assertTrue(any("schema" in e for e in v.validate_assessment(a, rubric)))
+
+
 class Repository(unittest.TestCase):
     def test_repository_checks_pass(self):
         self.assertEqual(v.check_repository(), [])

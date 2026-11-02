@@ -21,8 +21,8 @@ If resource functions are not supplied, infer them from evidence (suggested tags
 2. Load [method.md](references/method.md) before collecting evidence. Resolve the resource and assessment scope from the supplied URL, then follow its bounded search, evidence distinctions, and restricted-evidence handling.
 3. Record every rubric criterion exactly once, with outcome met, unmet, unknown, or not_applicable. Missing evidence is `unknown`, never failure or success. Derive practice results only with the ordered `decision_rules` in the rubric, and show criterion counts and evidence completeness with each result.
 4. If comparing with 2023 or another prior assessment, load [assessment-2023-crosswalk.md](references/assessment-2023-crosswalk.md). A historical "yes" does not establish a current score.
-5. Recheck findings as [method.md](references/method.md) requires.
-6. Load the templates [report.md](assets/report.md) and [checklist.md](assets/checklist.md) and the schema [assessment.schema.json](assets/assessment.schema.json) when generating outputs. Write all three drafts as method.md describes, or return them inline with clear delimiters if no filesystem access exists.
+5. Recheck findings as [method.md](references/method.md) requires, computing the numeric-ID verification sample and recording actual checks.
+6. Load the templates [report.md](assets/report.md) and [checklist.md](assets/checklist.md) and the schema [assessment.schema.json](assets/assessment.schema.json) when generating outputs. Record separate agent/model and generation/review provenance, including unknown values and attribution sources. Write all three drafts as method.md describes, or return them inline with clear delimiters if no filesystem access exists.
 7. If this repository's `scripts/validate.py` is available, run it on the JSON output; fix every reported error and re-run until it passes, then regenerate the report and checklist from the corrected JSON. Passing checks structure only, not correctness of findings.
 
 ## Execution boundaries

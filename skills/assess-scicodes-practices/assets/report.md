@@ -7,6 +7,7 @@
 - Audit date: {{audit_date}}
 - Resource functions: {{resource_functions_with_basis}}
 - Baseline: {{baseline_id_version_status}} | Rubric: {{rubric_version}} | Skill: {{skill_version}} | Model: {{model_or_unknown}}
+- Run provenance (generation and review separately): {{run_provenance_with_attribution_basis_and_unknowns}}
 - Access limitations: {{access_limitations}}
 
 ## Results by practice
@@ -33,6 +34,10 @@ Show counts next to every result, including exclusions. Use scorecard labels 0â€
 ## Historical comparison
 
 {{only_if_supported_with_difference_categories_and_original_labels}}
+
+## Search coverage
+
+{{policy_topics_footer_targets_access_results_unsuccessful_searches_and_stopping_reasons}}
 
 ## Verification
 

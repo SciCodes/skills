@@ -294,7 +294,7 @@ def validate_assessment(assessment, rubric, schema=None):
     errors = _check_provenance(assessment, rubric)
     errors += _check_coverage(assessment, crit_to_practice, practice_ids)
     errors += _check_evidence(assessment, crit_meta)
-    errors += _check_references(assessment, crit_to_practice, practice_ids)
+    errors += _check_references(assessment, crit_to_practice, practice_ids, rubric)
     if errors:
         return errors
     return _check_results(assessment, rubric, crit_to_practice, practice_ids)
@@ -398,8 +398,24 @@ def _check_evidence(assessment, crit_meta):
     return errors
 
 
-def _check_references(assessment, crit_to_practice, practice_ids):
+def verification_sample(assessment):
+    """Return every third remaining evidence ID, ordered by integer suffix."""
+    checked = {
+        ref
+        for entry in assessment["verification"]
+        if entry["selection"] != "sample"
+        for ref in entry["evidence_ids"]
+    }
+    remaining = {e["id"] for e in assessment["evidence"]} - checked
+    return sorted(remaining, key=lambda ref: int(ref[1:]))[::3]
+
+
+def _check_references(assessment, crit_to_practice, practice_ids, rubric):
     errors = []
+    optional = {
+        item["id"]: item["practice_id"]
+        for item in rubric.get("optional_enhancements", [])
+    }
     evidence = {e["id"] for e in assessment["evidence"]}
     action_ids = [a["id"] for a in assessment["actions"]]
     for aid in sorted(_unique(action_ids)):
@@ -408,12 +424,22 @@ def _check_references(assessment, crit_to_practice, practice_ids):
         if a["practice_id"] not in practice_ids:
             errors.append(f"{a['id']}: unknown practice {a['practice_id']}")
         for cid in a.get("criterion_ids", []):
-            if crit_to_practice.get(cid) != a["practice_id"]:
+            owner = crit_to_practice.get(cid)
+            if a["type"] == "optional_enhancement" and cid in optional:
+                owner = optional[cid]
+            if owner != a["practice_id"]:
                 errors.append(f"{a['id']}: criterion {cid} not in {a['practice_id']}")
     for v in assessment["verification"]:
         for ref in v["evidence_ids"]:
             if ref not in evidence:
                 errors.append(f"verification: unknown evidence {ref}")
+
+    samples = [v for v in assessment["verification"] if v["selection"] == "sample"]
+    if samples:
+        reported = [ref for entry in samples for ref in entry["evidence_ids"]]
+        expected = verification_sample(assessment)
+        if len(reported) != len(set(reported)) or set(reported) != set(expected):
+            errors.append(f"verification: sample must contain exactly {expected}")
 
     return errors
 
